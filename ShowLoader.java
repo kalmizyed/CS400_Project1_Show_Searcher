@@ -29,51 +29,88 @@ public class ShowLoader implements IShowLoader{
     /**
      * method to retrieve a list of shows from the a given realtive path
      * @param filepath relative filepath of the csv file
-     * @returns a list of Show objects
+     * @returns a list of Show objects parsed from the csv file, 
+     * or an empty list if there aren't columns for every relevant show attribute
      */
     @Override
     public List<IShow> loadShows(String filepath) throws FileNotFoundException {
         Scanner scn = new Scanner(new File(filepath), "UTF-8");
         ArrayList<IShow> list = new ArrayList<IShow>();
+        //if no columns are defined, return an empty list
         if(!scn.hasNextLine()) return list;
-        ArrayList<String> columns = getArrayListFromCSVRow(scn.nextLine());
-        int titleIndex = columns.indexOf("Title");
-        int yearIndex = columns.indexOf("Year");
-        int ratingIndex = columns.indexOf("Rotten Tomatoes");
-        int netflixIndex = columns.indexOf("Netflix");
-        int huluIndex = columns.indexOf("Hulu");
-        int primeIndex = columns.indexOf("Prime Video");
-        int disneyIndex = columns.indexOf("Disney+");
 
-        while(scn.hasNext()){
-            ArrayList<String> row = getArrayListFromCSVRow(scn.nextLine());
-            String providers = "";
-            if(row.get(netflixIndex).equals("1")) providers += "Netflix";
-            if(row.get(huluIndex).equals("1")) providers += "Hulu";
-            if(row.get(primeIndex).equals("1")) providers += "Prime Video";
-            if(row.get(disneyIndex).equals("1")) providers += "Disney+";
-            list.add(new Show(row.get(titleIndex), 
-                Integer.parseInt(row.get(yearIndex)), 
-                Integer.parseInt(row.get(ratingIndex).substring(0, row.get(ratingIndex).indexOf("/"))),
-                providers));
-        }
-        return list;
-    }
-    /**
-     * Helper method to get an arraylist from a csv row
-     * @param line line to turn into an ArrayList
-     * @return ArrayList representation of line, split at each comma that isnt inside of quotes
-     */
-    private ArrayList<String> getArrayListFromCSVRow(String line){
-        ArrayList<String> list = new ArrayList<String>();
+        int titleIndex = -1;
+        int yearIndex = -1;
+        int ratingIndex = -1;
+        int netflixIndex = -1;
+        int huluIndex = -1;
+        int primeIndex = -1;
+        int disneyIndex = -1;
+
+        String columns = scn.nextLine();
         int quotesSinceLastComma = 0;
         int indexOfLastComma = -1;
-        for(int i = 0; i < line.length(); i++){
-            String currChar = line.substring(i, i+1);
+        int currColIndex = 0;
+
+        //loop through columns and find indices of show attributes
+        for(int i = 0; i < columns.length(); i++){
+            String currChar = columns.substring(i, i+1);
             if(currChar.equals("\"")) quotesSinceLastComma++;
-            if(currChar.equals(",") && quotesSinceLastComma % 2 == 0){
-                list.add(line.substring(indexOfLastComma + 1, i).replace("\"\"", "\""));
+            if((currChar.equals(",")) && quotesSinceLastComma % 2 == 0){
+                String curr = columns.substring(indexOfLastComma + 1, i);
+
+                if(curr.equals("Title")) titleIndex = currColIndex;
+                if(curr.equals("Year")) yearIndex = currColIndex;
+                if(curr.equals("Rotten Tomatoes")) ratingIndex = currColIndex;
+                if(curr.equals("Netflix")) netflixIndex = currColIndex;
+                if(curr.equals("Hulu")) huluIndex = currColIndex;
+                if(curr.equals("Prime Video")) primeIndex = currColIndex;
+                if(curr.equals("Disney+")) disneyIndex = currColIndex;
+
+                currColIndex++;
                 indexOfLastComma = i;
+                quotesSinceLastComma = 0; //not stricly necessary
+            }
+        }
+        //if any of the attribute indices are still -1, return an empty list
+        if(titleIndex == -1 || yearIndex == -1 || ratingIndex == -1
+            || netflixIndex == -1 || huluIndex == -1 || primeIndex == -1
+            || disneyIndex == -1
+            ) return list;
+
+
+        quotesSinceLastComma = 0;
+        indexOfLastComma = -1;
+        currColIndex = 0;
+        //loop through each line until there are none left
+        while(scn.hasNext()){
+            String line = scn.nextLine();
+
+            String title = null;
+            int year = -1;
+            int rating = -1;
+            String providers = "";
+            
+            //loop through the characters of this line
+            for(int i = 0; i < line.length(); i++){
+                String currChar = line.substring(i, i+1);
+                if(currChar.equals("\"")) quotesSinceLastComma++;
+                if((currChar.equals(",")) && quotesSinceLastComma % 2 == 0){
+                    String val = line.substring(indexOfLastComma + 1, i).replace("\"\"", "\"");
+                    if(currColIndex == titleIndex) title = val;
+                    if(currColIndex == yearIndex) year = Integer.parseInt(val);
+                    if(currColIndex == ratingIndex) rating = Integer.parseInt(val.substring(0, val.indexOf("/")));
+                    if(currColIndex == netflixIndex && val.equals("1")) providers += "Netflix";
+                    if(currColIndex == huluIndex && val.equals("1")) providers += "Hulu";
+                    if(currColIndex == primeIndex && val.equals("1")) providers += "Prime Video";
+                    if(currColIndex == disneyIndex && val.equals("1")) providers += "Disney+";
+
+                    indexOfLastComma = i;
+                    currColIndex++;
+                    quotesSinceLastComma = 0;
+                }
+                if(title == null || year == -1 || rating == -1) continue;
+                list.add(new Show(title, year, rating, providers));
             }
         }
         return list;
