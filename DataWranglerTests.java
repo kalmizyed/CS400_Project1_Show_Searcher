@@ -8,6 +8,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.util.List;
 
 /**
  * @author jblake
@@ -16,18 +17,11 @@ import java.io.FileWriter;
  */
 public class DataWranglerTests {
     public static void main(String[] args){
-        // ShowLoader s = new ShowLoader();
-        // try {
-        //     for(IShow show : s.loadShows("tv_shows.csv")){
-        //         System.out.println("Title: " + show.getTitle() + " Year: + " + show.getYear() + " Rating: " + show.getRating());
-        //     }
-        // } catch (FileNotFoundException e) {
-        //     e.printStackTrace();
-        // }
         System.out.println(test1());
         System.out.println(test2());
         System.out.println(test3());
         System.out.println(test4());
+        System.out.println(test5());
     }
 
     /**
@@ -70,7 +64,7 @@ public class DataWranglerTests {
     }
     /**
      * tests the ShowLoader's loadShows method on a csv with ONLY the relevant columns
-     * and no tricky quotes
+     * and no tricky quotes/commas
      * @return true if all cases work as intended, false otherwise
      */
     public static boolean test2(){
@@ -86,7 +80,9 @@ public class DataWranglerTests {
             //Loop through the list of show returned by loadShows, for each show, if it's title isn't one
             // of the 2 from above, return false, otherwise, check to make sure all of show's other
             //data matches up with the title
-            for(IShow show : s.loadShows("test2.csv")) {                
+            List<IShow> shows = s.loadShows("test2.csv");
+            if(shows.size() != 2) return false;
+            for(IShow show : shows) {                
                 if(show.getTitle().equals("Joe Dirt")){
                     if(show.getYear() != 2012) return false;
                     if(show.getRating() != 22) return false;
@@ -112,7 +108,7 @@ public class DataWranglerTests {
     }
     /**
      * tests the ShowLoader's loadShows method on a csv with more columns than
-     * just the relevant ones but no tricky quotes
+     * just the relevant ones but no tricky quotes/commas
      * @return true if all cases work as intended, false otherwise
      */
     public static boolean test3(){
@@ -128,7 +124,9 @@ public class DataWranglerTests {
             //Loop through the list of show returned by loadShows, for each show, if it's title isn't one
             // of the 2 from above, return false, otherwise, check to make sure all of show's other
             //data matches up with the title
-            for(IShow show : s.loadShows("test3.csv")) {                
+            List<IShow> shows = s.loadShows("test3.csv");
+            if(shows.size() != 2) return false;
+            for(IShow show : shows) {                
                 if(show.getTitle().equals("Joe Dirt")){
                     if(show.getYear() != 2012) return false;
                     if(show.getRating() != 22) return false;
@@ -152,39 +150,36 @@ public class DataWranglerTests {
         return true;
     }
     /**
-     * tests the ShowLoader's loadShows method on a csv with tricky quotes
+     * tests the ShowLoader's loadShows method on a csv with tricky quotes/commas 
+     * (In columns for relevant attribute so they don't get skipped)
      * @return true if all cases work as intended, false otherwise
      */
     public static boolean test4(){
         try {
             File f = new File("test4.csv");
             FileWriter writer = new FileWriter(f, false);
-            //made this in google sheets and downloaded it, absolutly nasty quotes in here
-            writer.write("Title,Year,\"hello, \"\"world\"\"\",Rotten Tomatoes,Netflix,Hulu,\"\"\"\"\"blue\"\",\"\" world,\",Prime Video,Disney+\nJoe Dirt,2012,\", \"\",\"\" ,\",22/100,1,0,\"\"\"I'm, blue\"\"\",1,0\nHell's Kitchen,2015,\", \"\"\"\"\"\"\"\"\",99,0,1,\"you, \"\"\"\" too\",1,0");
+            //made this in google sheets and downloaded it, absolutly nasty quotes/commas in here
+            writer.write("Title,Year,Rotten Tomatoes,Netflix,Hulu,Prime Video,Disney+\n\"\"\"Ramsey, Gordon\"\", to Hell, and Back again\",2012,22/100,1,0,1,0\n\",,\"\"The Good Life\"\",\",2015,99/100,0,1,1,0");
+            //titles look like this in actual sheet:
+            //  "Ramsey, Gordon", to Hell, and Back again
+            //  ,,"The Good Life",
             writer.close();
 
             ShowLoader s = new ShowLoader();
             //Loop through the list of show returned by loadShows, for each show, if it's title isn't one
             // of the 2 from above, return false, otherwise, check to make sure all of show's other
             //data matches up with the title
-            for(IShow show : s.loadShows("test4.csv")) {                
-                if(show.getTitle().equals("Joe Dirt")){
-                    if(show.getYear() != 2012) return false;
-                    if(show.getRating() != 22) return false;
-                    if(!show.isAvailableOn("Netflix")) return false;
-                    if(show.isAvailableOn("Hulu")) return false;
-                    if(!show.isAvailableOn("Prime Video")) return false;
-                    if(show.isAvailableOn("Disney+")) return false;
-                } else if(show.getTitle().equals("Hell's Kitchen")){
-                    if(show.getYear() != 2015) return false;
-                    if(show.getRating() != 99) return false;
-                    if(show.isAvailableOn("Netflix")) return false;
-                    if(!show.isAvailableOn("Hulu")) return false;
-                    if(!show.isAvailableOn("Prime Video")) return false;
-                    if(show.isAvailableOn("Disney+")) return false;
-                } else return false;
+            List<IShow> shows = s.loadShows("test4.csv");
+            if(shows.size() != 2) return false;
+            for(IShow show : shows) {         
+                if(!(
+                    show.getTitle().equals("\"Ramsey, Gordon\", to Hell, and Back again")
+                    || show.getTitle().equals(",,\"The Good Life\",")
+                    )
+                    ) return false;
             }
         } catch(Exception e){
+            e.printStackTrace();
             //unexpected Exceptions
             return false;
         }
@@ -196,6 +191,21 @@ public class DataWranglerTests {
      */
     public static boolean test5(){
         try {
+            ShowLoader s = new ShowLoader();
+            try{
+                s.loadShows("Invalid file path");
+                //should've thrown FileNotFoundException
+                return false;
+            }
+            catch(FileNotFoundException e){
+                //expected
+            }
+            //empty file should yeild an empty list
+            File f = new File("empty.csv");
+            FileWriter writer = new FileWriter(f);
+            writer.write("");
+            writer.close();
+            if(!s.loadShows("empty.csv").isEmpty()) return false;
 
         } catch(Exception e){
             //unexpected Exceptions

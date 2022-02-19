@@ -72,16 +72,27 @@ public class ShowLoader implements IShowLoader{
                 quotesSinceLastComma = 0; //not stricly necessary
             }
         }
+        //since items are checked once you hit a trailing comma, must do an extra check on the last elements
+        //done same way as in loop
+        if(indexOfLastComma != columns.length() - 1){
+            String curr = columns.substring(indexOfLastComma + 1);
+            if(curr.equals("Title")) titleIndex = currColIndex;
+            if(curr.equals("Year")) yearIndex = currColIndex;
+            if(curr.equals("Rotten Tomatoes")) ratingIndex = currColIndex;
+            if(curr.equals("Netflix")) netflixIndex = currColIndex;
+            if(curr.equals("Hulu")) huluIndex = currColIndex;
+            if(curr.equals("Prime Video")) primeIndex = currColIndex;
+            if(curr.equals("Disney+")) disneyIndex = currColIndex;
+        }
+
+
         //if any of the attribute indices are still -1, return an empty list
-        if(titleIndex == -1 || yearIndex == -1 || ratingIndex == -1
+        if(titleIndex == -1 || yearIndex == -1 || ratingIndex == -1 
             || netflixIndex == -1 || huluIndex == -1 || primeIndex == -1
             || disneyIndex == -1
             ) return list;
 
 
-        quotesSinceLastComma = 0;
-        indexOfLastComma = -1;
-        currColIndex = 0;
         //loop through each line until there are none left
         while(scn.hasNext()){
             String line = scn.nextLine();
@@ -90,13 +101,31 @@ public class ShowLoader implements IShowLoader{
             int year = -1;
             int rating = -1;
             String providers = "";
+
+            quotesSinceLastComma = 0;
+            indexOfLastComma = -1;
+            currColIndex = 0;
+            int quotesAtStart = 0;
+
             
             //loop through the characters of this line
             for(int i = 0; i < line.length(); i++){
                 String currChar = line.substring(i, i+1);
-                if(currChar.equals("\"")) quotesSinceLastComma++;
+                if(currChar.equals("\"")) {
+                    quotesSinceLastComma++;
+                    continue;
+                }
+                if(quotesAtStart == 0) quotesAtStart = quotesSinceLastComma;
                 if((currChar.equals(",")) && quotesSinceLastComma % 2 == 0){
-                    String val = line.substring(indexOfLastComma + 1, i).replace("\"\"", "\"");
+                    String val = line.substring(indexOfLastComma + 1, i);
+                    if(quotesAtStart % 2 != 0){
+                        val = val.substring(1, val.length()-1);
+                    }
+                    val = val.replace("\"\"", "\"");
+
+                    //amybe keep track of another index to see if there are any false commas
+                    //after the first comma, if there is a comma before any other quotes, remove the outer quotes.
+                    //then remove 
                     if(currColIndex == titleIndex) title = val;
                     if(currColIndex == yearIndex) year = Integer.parseInt(val);
                     if(currColIndex == ratingIndex) rating = Integer.parseInt(val.substring(0, val.indexOf("/")));
@@ -104,14 +133,27 @@ public class ShowLoader implements IShowLoader{
                     if(currColIndex == huluIndex && val.equals("1")) providers += "Hulu";
                     if(currColIndex == primeIndex && val.equals("1")) providers += "Prime Video";
                     if(currColIndex == disneyIndex && val.equals("1")) providers += "Disney+";
-
                     indexOfLastComma = i;
                     currColIndex++;
                     quotesSinceLastComma = 0;
+                    quotesAtStart = 0;
                 }
-                if(title == null || year == -1 || rating == -1) continue;
-                list.add(new Show(title, year, rating, providers));
             }
+            //since items are checked once you hit a trailing comma, must do an extra check on the last elements
+            //done same way as in loop
+            if(indexOfLastComma < line.length() - 1){
+                String val = line.substring(indexOfLastComma + 1).replace("\"\"", "\"");
+                if(currColIndex == titleIndex) title = val;
+                if(currColIndex == yearIndex) year = Integer.parseInt(val);
+                if(currColIndex == ratingIndex) rating = Integer.parseInt(val.substring(0, val.indexOf("/")));
+                if(currColIndex == netflixIndex && val.equals("1")) providers += "Netflix";
+                if(currColIndex == huluIndex && val.equals("1")) providers += "Hulu";
+                if(currColIndex == primeIndex && val.equals("1")) providers += "Prime Video";
+                if(currColIndex == disneyIndex && val.equals("1")) providers += "Disney+";
+            }
+            
+            if(title == null || year == -1 || rating == -1) continue;
+            list.add(new Show(title, year, rating, providers));
         }
         return list;
     }
