@@ -186,7 +186,7 @@ public class DataWranglerTests {
         return true;
     }
     /**
-     * tests the ShowLoader's loadShows method with invalid and non-existent files
+     * tests the ShowLoader's loadShows method with invalid data and non-existent file
      * @return true if all cases work as intended, false otherwise
      */
     public static boolean test5(){
@@ -201,11 +201,25 @@ public class DataWranglerTests {
                 //expected
             }
             //empty file should yeild an empty list
-            File f = new File("empty.csv");
-            FileWriter writer = new FileWriter(f);
+            File f = new File("test5.csv");
+            FileWriter writer = new FileWriter(f, false);
             writer.write("");
             writer.close();
-            if(!s.loadShows("empty.csv").isEmpty()) return false;
+            if(!s.loadShows("test5.csv").isEmpty()) return false;
+
+            //Incorrect show data, should skip over invalid shows
+            //should skip over Joe dirt because rating is formatted incorrect
+            FileWriter writer2 = new FileWriter(f);
+            writer2.write("Title,Year,Rotten Tomatoes,Netflix,Hulu,Prime Video,Disney+\n"
+            + "Joe Dirt,2012,22,1,0,1,0\n"
+            + "Hell's Kitchen,2015,99/100,0,1,1,0");
+            writer2.close();
+            List<IShow> shows = s.loadShows("test5.csv");
+            //shows should be only have one element, that is the Show object for Hell's Kitchen
+            if(shows.size() != 1) return false;
+            if(!shows.get(0).getTitle().equals("Hell's Kitchen")) return false;
+
+
 
         } catch(Exception e){
             //unexpected Exceptions
