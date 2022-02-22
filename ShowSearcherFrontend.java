@@ -44,7 +44,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         System.out.println("    4) [Q]uit");
         System.out.print("Choose a command from the menu above: ");
         
-        String command = scanner.next();
+        String command = scanner.nextLine();
 
         if(command.length() > 1) {
             System.out.println("Invalid command.");
@@ -125,9 +125,8 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void titleSearch() {
-        scanner.nextLine();
         System.out.print("Choose a word that you would like to search for: ");
-        String word = scanner.next();
+        String word = scanner.nextLine();
 
         List<IShow> showList = showSearcher.searchByTitleWord(word);
         System.out.println("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
@@ -140,9 +139,8 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void yearSearch() {
-        scanner.nextLine();
         System.out.print("Choose a year that you would like to search: ");
-        int year = Integer.parseInt(scanner.next());
+        int year = Integer.parseInt(scanner.nextLine());
 
         List<IShow> showList = showSearcher.searchByYear(year);
         System.out.print("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
@@ -169,7 +167,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
         char command = '/';
         System.out.print("Enter your command: ");
-        String commandString = scanner.next();
+        String commandString = scanner.nextLine();
         command = commandString.toLowerCase().charAt(0);
 
         switch(command) {
