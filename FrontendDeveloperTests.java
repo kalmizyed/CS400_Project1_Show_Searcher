@@ -165,12 +165,33 @@ public class FrontendDeveloperTests {
      */
     public static boolean testTitleSearch() {
         try {
+            TextUITester tester;
+            String output;
+
             // SCENARIO 1: Test no match
             ////////////////////////////
+
+            tester = new TextUITester("t\nqwerty\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Found 0/")) {
+                System.out.println("FAILED: testTitleSearch(); Scenario 1");
+                return false;
+            }
 
 
             // SCENARIO 2: Test match
             /////////////////////////
+
+            tester = new TextUITester("t\ntitan\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Attack on Titan")) {
+                System.out.println("FAILED: testTitleSearch(); Scenario 2");
+                return false;
+            }
 
         } catch (Exception e) {
             System.out.println("FAILED: testTitleSearch(); unexpected exception");
@@ -178,7 +199,7 @@ public class FrontendDeveloperTests {
             return false;
         }
 
-        return false; // TODO
+        return true;
     }
 
     /**
@@ -187,12 +208,33 @@ public class FrontendDeveloperTests {
      */
     public static boolean testYearSearch() {
         try {
+            TextUITester tester;
+            String output;
+
             // SCENARIO 1: Test no match
             ////////////////////////////
+
+            tester = new TextUITester("y\n1900\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Found 0/")) {
+                System.out.println("FAILED: testYearSearch(); Scenario 1");
+                return false;
+            }
 
 
             // SCENARIO 2: Test match
             /////////////////////////
+
+            tester = new TextUITester("y\n2011\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Breaking Bad")) {
+                System.out.println("FAILED: testYearSearch(); Scenario 2");
+                return false;
+            }
 
         } catch (Exception e) {
             System.out.println("FAILED: testYearSearch(); unexpected exception");
@@ -200,7 +242,7 @@ public class FrontendDeveloperTests {
             return false;
         }
 
-        return false; // TODO
+        return true;
     }
 
     /**
@@ -209,30 +251,95 @@ public class FrontendDeveloperTests {
      */
     public static boolean testFilterByProvider() {
         try {
+            TextUITester tester;
+            String output;
+
             // SCENARIO 1: Test valid input
             ///////////////////////////////
 
             // 1A: lowercase character
+            tester = new TextUITester("f\nn\nq\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("___ [N]etflix")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 1A");
+                return false;
+            }
 
             // 1B: uppercase character
+            tester = new TextUITester("F\nN\nQ\nQ\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
 
+            if(!output.contains("___ [N]etflix")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 1B");
+                return false;
+            }
+            
             // 1C: number
+            tester = new TextUITester("3\n1\n5\n4\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
 
-            // 1D: quit
-
+            if(!output.contains("___ [N]etflix")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 1C");
+                return false;
+            }
+            
 
             // SCENARIO 2: Test invalid input
             /////////////////////////////////
 
             // 2A: invalid lowercase character
+            tester = new TextUITester("f\nu\nq\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Invalid command")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 2A");
+                return false;
+            }
 
             // 2B: invalid uppercase character
+            tester = new TextUITester("F\nU\nQ\nQ\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Invalid command")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 2B");
+                return false;
+            }
 
             // 2C: invalid number
+            tester = new TextUITester("3\n7\n5\n4\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Invalid command")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 2C");
+                return false;
+            }
 
             // 2D: string longer than 1 character
+            tester = new TextUITester("f\nnetflix\nq\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Invalid command")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 2D");
+                return false;
+            }
 
             // 2E: invalid character
+            tester = new TextUITester("f\n=\nq\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Invalid command")) {
+                System.out.println("FAILED: testFilterByProvider(); Scenario 2E");
+                return false;
+            }
 
         } catch (Exception e) {
             System.out.println("FAILED: testFilterByProvider(); unexpected exception");
@@ -240,7 +347,7 @@ public class FrontendDeveloperTests {
             return false;
         }
 
-        return false; // TODO
+        return true;
     }
 
     public static void main(String[] args) {

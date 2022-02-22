@@ -46,6 +46,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         
         String command = scanner.nextLine();
 
+        // Make sure command is only one character
         if(command.length() > 1) {
             System.out.println("Invalid command.");
             displayCommandMenu();
@@ -165,9 +166,17 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
         System.out.println("    5) [Q]uit toggling provider filters");
 
-        char command = '/';
+        char command;
         System.out.print("Enter your command: ");
         String commandString = scanner.nextLine();
+
+        // Make sure command is only one character
+        if(commandString.length() > 1) {
+            System.out.println("Invalid command.");
+            filterByProvider();
+            return;
+        }
+
         command = commandString.toLowerCase().charAt(0);
 
         switch(command) {
@@ -204,6 +213,9 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
                 filterByProvider();
                 break;
             case 'q':
+                displayCommandMenu();
+                break;
+            case '5':
                 displayCommandMenu();
                 break;
             default:
