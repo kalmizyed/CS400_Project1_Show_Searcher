@@ -106,7 +106,13 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
     public void titleSearch() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Choose a word that you would like to search for: ");
-        String word = scanner.nextLine();
+        try {
+            String word = scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Enter a valid string.");
+            scanner.close();
+            titleSearch();
+        }
         scanner.close();
 
         List<IShow> showList = showSearcher.searchByTitleWord(word);
@@ -120,8 +126,22 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void yearSearch() {
-        // TODO Auto-generated method stub
-        
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Choose a year that you would like to search: ");
+        try {
+            int year = Integer.parseInt(scanner.nextLine());
+        }
+        catch (Exception e) {
+            System.out.println("Enter an integer.");
+            scanner.close();
+            yearSearch();
+        }
+        scanner.close();
+
+        List<IShow> showList = showSearcher.searchByYear(year);
+        System.out.print("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
+        displayShows(showList);
+        displayCommandMenu();
     }
 
     /**
