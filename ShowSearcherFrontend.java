@@ -63,10 +63,10 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
                 filterByProvider();
                 break;
             case 'q':
-                scanner.close();
+                quit();
                 break;
             case '4':
-                scanner.close();
+                quit();
                 break;
             default:
                 System.out.println("Invalid command.");
@@ -154,6 +154,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
         System.out.println("    5) [Q]uit toggling provider filters");
 
+        scanner.nextLine();
         char command = '/';
         String commandString = scanner.next();
         command = commandString.toLowerCase().charAt(0);
@@ -162,32 +163,47 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
             case 'n':
                 showSearcher.toggleProviderFilter("Netflix");
                 filterByProvider();
+                break;
             case '1':
                 showSearcher.toggleProviderFilter("Netflix");
                 filterByProvider();
+                break;
             case 'h':
                 showSearcher.toggleProviderFilter("Hulu");
                 filterByProvider();
+                break;
             case '2':
                 showSearcher.toggleProviderFilter("Hulu");
                 filterByProvider();
+                break;
             case 'p':
                 showSearcher.toggleProviderFilter("Prime Video");
                 filterByProvider();
+                break;
             case '3':
                 showSearcher.toggleProviderFilter("Prime Video");
                 filterByProvider();
+                break;
             case 'd':
                 showSearcher.toggleProviderFilter("Disney+");
                 filterByProvider();
+                break;
             case '4':
                 showSearcher.toggleProviderFilter("Disney+");
                 filterByProvider();
+                break;
             case 'q':
                 displayCommandMenu();
+                break;
             default:
                 System.out.println("Invalid command.");
                 filterByProvider();
+                break;
         }
+    }
+
+    public void quit() {
+        System.out.println("Quitting...");
+        scanner.close();
     }
 }

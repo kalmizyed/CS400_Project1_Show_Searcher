@@ -12,15 +12,21 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
     private static final String[] providersArray = {"Netflix", "Hulu", "Prime Video", "Disney+"};
     private static final List<String> providers = Arrays.asList(providersArray);
     private boolean[] providerFilters = {true, true, true, true};
+    private List<IShow> shows;
+
+    public ShowSearcherBackendPlaceholder() {
+        shows = new ArrayList<>();
+    }
 
     @Override
     public void addShow(IShow show) {
+        shows.add(show);
         System.out.println("Show added.");
     }
 
     @Override
     public int getNumberOfShows() {
-        return 15;
+        return shows.size();
     }
 
     @Override
@@ -46,12 +52,36 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
 
     @Override
     public List<IShow> searchByTitleWord(String word) {
-        return new ArrayList<IShow>();
+        List<IShow> matchingShows = new ArrayList<IShow>();
+
+        for(IShow show : shows) {
+            if(show.getTitle().toLowerCase().contains(word.toLowerCase())) {
+                boolean showMatchesFilters = false;
+                for(int i = 0; i < providerFilters.length; i++) { // Show must be on at least one filtered provider
+                    if(show.isAvailableOn(providersArray[i]) && providerFilters[i]) showMatchesFilters = true;
+                }
+                if(showMatchesFilters) matchingShows.add(show);
+            }
+        }
+
+        return matchingShows;
     }
 
     @Override
     public List<IShow> searchByYear(int year) {
-        return new ArrayList<IShow>();
+        List<IShow> matchingShows = new ArrayList<IShow>();
+
+        for(IShow show : shows) {
+            if(show.getYear() == year) {
+                boolean showMatchesFilters = false;
+                for(int i = 0; i < providerFilters.length; i++) { // Show must be on at least one filtered provider
+                    if(show.isAvailableOn(providersArray[i]) && providerFilters[i]) showMatchesFilters = true;
+                }
+                if(showMatchesFilters) matchingShows.add(show);
+            }
+        }
+
+        return matchingShows;
     }
     
 }
