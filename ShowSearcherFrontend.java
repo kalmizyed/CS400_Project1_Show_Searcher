@@ -156,6 +156,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
         scanner.nextLine();
         char command = '/';
+        System.out.print("Enter your command: ");
         String commandString = scanner.next();
         command = commandString.toLowerCase().charAt(0);
 
