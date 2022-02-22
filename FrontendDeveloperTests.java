@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Tests the ShowSearcherFrontend class.
  * @author Kaden Almizyed
@@ -116,12 +118,37 @@ public class FrontendDeveloperTests {
      */
     public static boolean testDisplayShows() {
         try {
+            TextUITester tester;
+            String output;
+
             // SCENARIO 1: Test displaying empty list
             /////////////////////////////////////////
+
+            tester = new TextUITester("");
+            frontend.displayShows(new ArrayList<>());
+            output = tester.checkOutput();
+
+            if(output.length() != 0) {
+                System.out.println("FAILED: testDisplayShows(); Scenario 1");
+                return false;
+            }
 
 
             // SCENARIO 2: Test displaying filled list
             //////////////////////////////////////////
+
+            tester = new TextUITester("");
+            
+            ArrayList<IShow> showList = new ArrayList<>();
+            showList.add(new ShowPlaceholder());
+            frontend.displayShows(showList);
+
+            output = tester.checkOutput();
+
+            if(output.length() == 0 || !output.contains("NO TITLE")) {
+                System.out.println("FAILED: testDisplayShows(); Scenario 2");
+                return false;
+            }
 
         } catch (Exception e) {
             System.out.println("FAILED: testDisplayShows(); unexpected exception");
@@ -129,7 +156,7 @@ public class FrontendDeveloperTests {
             return false;
         }
 
-        return false; // TODO
+        return true;
     }
 
     /**
