@@ -21,19 +21,17 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
     @Override
     public void addShow(IShow show) {
         shows.add(show);
-        System.out.println("Show added.");
     }
 
     @Override
     public int getNumberOfShows() {
-        return shows.size();
+        return 122;
     }
 
     @Override
     public void setProviderFilter(String provider, boolean filter) {
         int index = providers.indexOf(provider);
         providerFilters[index] = filter;
-        System.out.println("Provider filter set to " + filter);
     }
 
     @Override
@@ -47,21 +45,24 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
         int index = providers.indexOf(provider);
         if(providerFilters[index]) providerFilters[index] = false;
         else providerFilters[index] = true;
-        System.out.println("Provider filter toggled to " + providerFilters[index]);
     }
 
     @Override
     public List<IShow> searchByTitleWord(String word) {
         List<IShow> matchingShows = new ArrayList<IShow>();
 
-        for(IShow show : shows) {
-            if(show.getTitle().toLowerCase().contains(word.toLowerCase())) {
-                boolean showMatchesFilters = false;
-                for(int i = 0; i < providerFilters.length; i++) { // Show must be on at least one filtered provider
-                    if(show.isAvailableOn(providersArray[i]) && providerFilters[i]) showMatchesFilters = true;
-                }
-                if(showMatchesFilters) matchingShows.add(show);
-            }
+        switch(word.toLowerCase()) {
+            case "title":
+                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new ShowPlaceholder());
+                break;
+            case "Titan":
+                matchingShows.add(new ShowPlaceholder("Attack on Titan", 2013, 80, true, true, false, false));
+                matchingShows.add(new ShowPlaceholder("Titanic", 2010, 70, true, false, false, true));
+            default:
+                break;
         }
 
         return matchingShows;
@@ -71,14 +72,18 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
     public List<IShow> searchByYear(int year) {
         List<IShow> matchingShows = new ArrayList<IShow>();
 
-        for(IShow show : shows) {
-            if(show.getYear() == year) {
-                boolean showMatchesFilters = false;
-                for(int i = 0; i < providerFilters.length; i++) { // Show must be on at least one filtered provider
-                    if(show.isAvailableOn(providersArray[i]) && providerFilters[i]) showMatchesFilters = true;
-                }
-                if(showMatchesFilters) matchingShows.add(show);
-            }
+        switch(year) {
+            case 2010:
+                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new ShowPlaceholder());
+                break;
+            case 2011:
+                matchingShows.add(new ShowPlaceholder("Breaking Bad", 2011, 80, true, true, false, false));
+                matchingShows.add(new ShowPlaceholder("Titanic II", 2011, 70, true, false, false, true));
+            default:
+                break;
         }
 
         return matchingShows;
