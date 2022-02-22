@@ -2,7 +2,7 @@
  * PLACEHOLDER CLASS
  * Returns placeholder values for methods in the IShow interface.
  */
-public class ShowBlank implements IShow {
+public class ShowPlaceholderBlank implements IShow { // TODO replace placeholder
 
     @Override
     public int compareTo(IShow o) {

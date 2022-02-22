@@ -2,10 +2,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShowSearcherFrontend implements IShowSearcherFrontend {
-    ShowSearcherBackendPlaceholder showSearcher = new ShowSearcherBackendPlaceholder();
+    IShowSearcherBackend showSearcher;
+    Scanner scanner;
 
     // Used for displaying streaming providers
-    String[] providers = {"Netflix", "Hulu", "Prime Video", "Disney+"};
+    private static final String[] providers = {"Netflix", "Hulu", "Prime Video", "Disney+"};
+
+    /**
+     * ShowSearcherFrontend constructor.  Creates a new ShowSearcherFrontend utilizing the given IShowSearcherBackend.
+     * @param showSearcher
+     */
+    public ShowSearcherFrontend(IShowSearcherBackend showSearcher) {
+        this.showSearcher = showSearcher;
+        scanner = new Scanner(System.in);
+    }
 
     /**
      * Starts the ShowSearcher app frontend.
@@ -29,9 +39,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         System.out.println("    4) [Q]uit");
         System.out.print("Choose a command from the menu above: ");
         
-        Scanner scanner = new Scanner(System.in);
         String command = scanner.next();
-        scanner.close();
 
         char commandChar = command.toLowerCase().charAt(0);
 
@@ -55,8 +63,10 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
                 filterByProvider();
                 break;
             case 'q':
+                scanner.close();
                 break;
             case '4':
+                scanner.close();
                 break;
             default:
                 System.out.println("Invalid command.");
@@ -104,19 +114,11 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void titleSearch() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Choose a word that you would like to search for: ");
-        try {
-            String word = scanner.nextLine();
-        } catch (Exception e) {
-            System.out.println("Enter a valid string.");
-            scanner.close();
-            titleSearch();
-        }
-        scanner.close();
+        String word = scanner.next();
 
         List<IShow> showList = showSearcher.searchByTitleWord(word);
-        System.out.print("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
+        System.out.println("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
         displayShows(showList);
         displayCommandMenu();
     }
@@ -126,17 +128,8 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void yearSearch() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Choose a year that you would like to search: ");
-        try {
-            int year = Integer.parseInt(scanner.nextLine());
-        }
-        catch (Exception e) {
-            System.out.println("Enter an integer.");
-            scanner.close();
-            yearSearch();
-        }
-        scanner.close();
+        int year = Integer.parseInt(scanner.next());
 
         List<IShow> showList = showSearcher.searchByYear(year);
         System.out.print("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
@@ -161,17 +154,9 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
         System.out.println("    5) [Q]uit toggling provider filters");
 
-        Scanner scanner = new Scanner(System.in);
         char command = '/';
-        try {
-            String commandString = scanner.next();
-            command = commandString.toLowerCase().charAt(0);
-        } catch (Exception e) {
-            System.out.println("Invalid command.");
-            scanner.close();
-            filterByProvider();
-        }
-        scanner.close();
+        String commandString = scanner.next();
+        command = commandString.toLowerCase().charAt(0);
 
         switch(command) {
             case 'n':

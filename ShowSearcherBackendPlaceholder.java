@@ -1,11 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * PLACEHOLDER CLASS
  * Returns placeholder values for methods in the IShowSearcherBackend interface.
  */
-public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend {
+public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { // TODO replace placeholder
+
+    // Used for toggling streaming provider filters
+    private static final String[] providersArray = {"Netflix", "Hulu", "Prime Video", "Disney+"};
+    private static final List<String> providers = Arrays.asList(providersArray);
+    private boolean[] providerFilters = {true, true, true, true};
 
     @Override
     public void addShow(IShow show) {
@@ -19,17 +25,23 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend {
 
     @Override
     public void setProviderFilter(String provider, boolean filter) {
-        System.out.println("Provider filter set.");
+        int index = providers.indexOf(provider);
+        providerFilters[index] = filter;
+        System.out.println("Provider filter set to " + filter);
     }
 
     @Override
     public boolean getProviderFilter(String provider) {
-        return true;
+        int index = providers.indexOf(provider);
+        return providerFilters[index];
     }
 
     @Override
     public void toggleProviderFilter(String provider) {
-        System.out.println("Provider filter toggled.");
+        int index = providers.indexOf(provider);
+        if(providerFilters[index]) providerFilters[index] = false;
+        else providerFilters[index] = true;
+        System.out.println("Provider filter toggled to " + providerFilters[index]);
     }
 
     @Override
