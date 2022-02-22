@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
+    // Used for displaying streaming providers
+    String[] providers = {"Netflix", "Hulu", "Prime Video", "Disney+"};
+
     /**
      * Starts the ShowSearcher app frontend.
      */
@@ -66,8 +69,33 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void displayShows(List<IShow> shows) {
-        // TODO Auto-generated method stub
-        
+        for(int i = 0; i < shows.size(); i++) {
+            IShow show = shows.get(i);
+
+            // Print item number
+            System.out.print((i+1) + ". ");
+
+            // Print show name
+            System.out.println(show.getTitle());
+
+            // Print rating, year
+            System.out.print("    ");
+            System.out.print(show.getRating() + "/100 ");
+            System.out.print("(" + show.getYear() + ") on:");
+
+            // Print streaming services 
+            boolean firstPrinted = false;
+            for(String provider : providers) {
+                if(show.isAvailableOn(provider)) {
+                    if(firstPrinted) System.out.print(","); // Add comma between providers
+                    else firstPrinted = true;
+                    
+                    System.out.print(" " + provider);
+                }
+            }
+
+            System.out.println();
+        }
     }
 
     /**
@@ -92,7 +120,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      * Allows the user to toggle which providers are filtered for.
      */
     public void filterByProvider() {
-
+        // TODO
     }
     
 }
