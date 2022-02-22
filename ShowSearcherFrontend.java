@@ -1,6 +1,10 @@
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The frontend of the Show Searcher App.  Runs commands in a loop until the user quits.
+ * @author Kaden Almizyed
+ */
 public class ShowSearcherFrontend implements IShowSearcherFrontend {
     IShowSearcherBackend showSearcher;
     Scanner scanner;
@@ -211,6 +215,9 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         }
     }
 
+    /**
+     * Ends the command loop and closes the scanner object.
+     */
     public void quit() {
         System.out.println("Quitting...");
         scanner.close();
