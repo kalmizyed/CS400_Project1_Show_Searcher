@@ -58,7 +58,7 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
                 matchingShows.add(new ShowPlaceholder());
                 matchingShows.add(new ShowPlaceholder());
                 break;
-            case "Titan":
+            case "titan":
                 matchingShows.add(new ShowPlaceholder("Attack on Titan", 2013, 80, true, true, false, false));
                 matchingShows.add(new ShowPlaceholder("Titanic", 2010, 70, true, false, false, true));
             default:

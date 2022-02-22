@@ -32,6 +32,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void displayCommandMenu() {
+
         System.out.println("Command Menu:");
         System.out.println("    1) Search by [T]itle Word");
         System.out.println("    2) Search by [Y]ear First Produced");
@@ -40,6 +41,12 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         System.out.print("Choose a command from the menu above: ");
         
         String command = scanner.next();
+
+        if(command.length() > 1) {
+            System.out.println("Invalid command.");
+            displayCommandMenu();
+            return;
+        }
 
         char commandChar = command.toLowerCase().charAt(0);
 
@@ -114,6 +121,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void titleSearch() {
+        scanner.nextLine();
         System.out.print("Choose a word that you would like to search for: ");
         String word = scanner.next();
 
@@ -128,6 +136,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void yearSearch() {
+        scanner.nextLine();
         System.out.print("Choose a year that you would like to search: ");
         int year = Integer.parseInt(scanner.next());
 
@@ -154,7 +163,6 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
 
         System.out.println("    5) [Q]uit toggling provider filters");
 
-        scanner.nextLine();
         char command = '/';
         System.out.print("Enter your command: ");
         String commandString = scanner.next();
