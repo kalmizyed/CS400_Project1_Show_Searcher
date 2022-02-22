@@ -148,7 +148,61 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      * Allows the user to toggle which providers are filtered for.
      */
     public void filterByProvider() {
-        // TODO
+        System.out.println("Providers that shows are being searched for:");
+
+        for(int i = 0; i < providers.length; i++) {
+            String provider = providers[i];
+            if(showSearcher.getProviderFilter(provider)) {
+                System.out.println("    " + (i+1) + ") _X_ [" + provider.charAt(0) + "]" + provider.substring(1));
+            } else {
+                System.out.println("    " + (i+1) + ") ___ [" + provider.charAt(0) + "]" + provider.substring(1));
+            }
+        }
+
+        System.out.println("    5) [Q]uit toggling provider filters");
+
+        Scanner scanner = new Scanner(System.in);
+        char command = '/';
+        try {
+            String commandString = scanner.next();
+            command = commandString.toLowerCase().charAt(0);
+        } catch (Exception e) {
+            System.out.println("Invalid command.");
+            scanner.close();
+            filterByProvider();
+        }
+        scanner.close();
+
+        switch(command) {
+            case 'n':
+                showSearcher.toggleProviderFilter("Netflix");
+                filterByProvider();
+            case '1':
+                showSearcher.toggleProviderFilter("Netflix");
+                filterByProvider();
+            case 'h':
+                showSearcher.toggleProviderFilter("Hulu");
+                filterByProvider();
+            case '2':
+                showSearcher.toggleProviderFilter("Hulu");
+                filterByProvider();
+            case 'p':
+                showSearcher.toggleProviderFilter("Prime Video");
+                filterByProvider();
+            case '3':
+                showSearcher.toggleProviderFilter("Prime Video");
+                filterByProvider();
+            case 'd':
+                showSearcher.toggleProviderFilter("Disney+");
+                filterByProvider();
+            case '4':
+                showSearcher.toggleProviderFilter("Disney+");
+                filterByProvider();
+            case 'q':
+                displayCommandMenu();
+            default:
+                System.out.println("Invalid command.");
+                filterByProvider();
+        }
     }
-    
 }
