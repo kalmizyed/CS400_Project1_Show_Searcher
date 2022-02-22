@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShowSearcherFrontend implements IShowSearcherFrontend {
+    ShowSearcherBackendPlaceholder showSearcher = new ShowSearcherBackendPlaceholder();
 
     // Used for displaying streaming providers
     String[] providers = {"Netflix", "Hulu", "Prime Video", "Disney+"};
@@ -103,8 +104,15 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void titleSearch() {
-        // TODO Auto-generated method stub
-        
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Choose a word that you would like to search for: ");
+        String word = scanner.nextLine();
+        scanner.close();
+
+        List<IShow> showList = showSearcher.searchByTitleWord(word);
+        System.out.print("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
+        displayShows(showList);
+        displayCommandMenu();
     }
 
     /**
