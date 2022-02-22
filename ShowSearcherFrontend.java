@@ -18,7 +18,6 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     public ShowSearcherFrontend(IShowSearcherBackend showSearcher) {
         this.showSearcher = showSearcher;
-        scanner = new Scanner(System.in);
     }
 
     /**
@@ -26,6 +25,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
      */
     @Override
     public void runCommandLoop() {
+        scanner = new Scanner(System.in);
         System.out.println("Welcome to the Show Searcher App!");
         System.out.println("=================================");
         displayCommandMenu();

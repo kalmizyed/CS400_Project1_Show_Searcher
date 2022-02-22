@@ -101,7 +101,6 @@ public class FrontendDeveloperTests {
                 System.out.println("FAILED: testDisplayCommandMenu(); Scenario 2E");
                 return false;
             }
-
         } catch (Exception e) {
             System.out.println("FAILED: testDisplayCommandMenu(); unexpected exception");
             e.printStackTrace();
@@ -215,5 +214,13 @@ public class FrontendDeveloperTests {
         }
 
         return false; // TODO
+    }
+
+    public static void main(String[] args) {
+        System.out.println("testDisplayCommandMenu(): " + testDisplayCommandMenu());
+        System.out.println("testDisplayShows(): " + testDisplayShows());
+        System.out.println("testTitleSearch(): " + testTitleSearch());
+        System.out.println("testYearSearch(): " + testYearSearch());
+        System.out.println("testFilterByProvider(): " + testFilterByProvider());
     }
 }
