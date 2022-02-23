@@ -1,0 +1,40 @@
+Script started on 2022-02-22 19:37:52-06:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="209" LINES="51"]
+kaden@DESKTOP-KCK7E9O:/mnt/c/Users/kaden/OneDrive/Desktop/COMP SCI 400/P1W3/Project1_DC_red$ git status
+On branch FrontendDeveloper
+Your branch is ahead of 'origin/FrontendDeveloper' by 22 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mlog[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+kaden@DESKTOP-KCK7E9O:/mnt/c/Users/kaden/OneDrive/Desktop/COMP SCI 400/P1W3/Project1_DC_red$ git log -1
+[?1h=[33mcommit 67446536f598a94c2852a0be90174064cd2fb986[m[33m ([m[1;36mHEAD -> [m[1;32mFrontendDeveloper[m[33m)[m[m
+Author: Kaden Almizyed <kalmizyed@wisc.edu>[m
+Date:   Tue Feb 22 19:37:42 2022 -0600[m
+[m
+    Added rules to Makefile[m
+[K[?1l>kaden@DESKTOP-KCK7E9O:/mnt/c/Users/kaden/OneDrive/Desktop/COMP SCI 400/P1W3/Project1_DC_red$ make clean
+rm *.class
+rm: cannot remove '*.class': No such file or directory
+make: *** [Makefile:20: clean] Error 1
+kaden@DESKTOP-KCK7E9O:/mnt/c/Users/kaden/OneDrive/Desktop/COMP SCI 400/P1W3/Project1_DC_red$ ls
+FrontendDeveloperTests.java  IShow.java        IShowSearcherBackend.java   Makefile	ShowLoaderPlaceholder.java  ShowSearcherApp.java		 ShowSearcherFrontend.java  log
+IHashTableSortedSets.java    IShowLoader.java  IShowSearcherFrontend.java  MapADT.java	ShowPlaceholder.java	    ShowSearcherBackendPlaceholder.java  TextUITester.java	    tv_shows.csv
+kaden@DESKTOP-KCK7E9O:/mnt/c/Users/kaden/OneDrive/Desktop/COMP SCI 400/P1W3/Project1_DC_red$ make runTests
+javac ShowPlaceholder.java
+javac ShowSearcherFrontend.java
+javac ShowSearcherBackendPlaceholder.java
+javac TextUITester.java
+javac FrontendDeveloperTests.java
+java FrontendDeveloperTests
+testDisplayCommandMenu(): true
+testDisplayShows(): true
+testTitleSearch(): true
+testYearSearch(): true
+testFilterByProvider(): true
+kaden@DESKTOP-KCK7E9O:/mnt/c/Users/kaden/OneDrive/Desktop/COMP SCI 400/P1W3/Project1_DC_red$ exit
+exit
+
+Script done on 2022-02-22 19:38:47-06:00 [COMMAND_EXIT_CODE="0"]
