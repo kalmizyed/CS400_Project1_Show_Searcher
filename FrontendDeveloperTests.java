@@ -360,47 +360,4 @@ public class FrontendDeveloperTests {
         System.out.println("testYearSearch(): " + testYearSearch());
         System.out.println("testFilterByProvider(): " + testFilterByProvider());
     }
-
-    // Wrapper methods to comply with specification
-    // in the event it's necessary to use these method names
-
-    /**
-     * Runs testDisplayCommandMenu().
-     * @return the output of testDisplayCommandMenu()
-     */
-    public static boolean test1() {
-        return testDisplayCommandMenu();
-    }
-
-    /**
-     * Runs testDisplayShows().
-     * @return the output of testDisplayShows()
-     */
-    public static boolean test2() {
-        return testDisplayShows();
-    }
-
-    /**
-     * Runs testTitleSearch().
-     * @return the output of testTitleSearch()
-     */
-    public static boolean test3() {
-        return testTitleSearch();
-    }
-
-    /**
-     * Runs testYearSearch().
-     * @return the output of testYearSearch()
-     */
-    public static boolean test4() {
-        return testYearSearch();
-    }
-
-    /**
-     * Runs testFilterByProvider().
-     * @return the output of testFilterByProvider()
-     */
-    public static boolean test5() {
-        return testFilterByProvider();
-    }
 }
