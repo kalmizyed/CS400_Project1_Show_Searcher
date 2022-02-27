@@ -1,39 +1,0 @@
-Script started on Sat Feb 19 17:04:29 2022
-[1m[7m%[27m[1m[0m                                                                                                                                     [0m[27m[24m[Jjackblake@Jacks-MacBook-Pro Project1_DC_red % [K[?2004hggit status[?2004l
-On branch DataWrangler
-Your branch is ahead of 'origin/DataWrangler' by 5 commits.
-  (use "git push" to publish your local commits)
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	[31mlog[m
-
-nothing added to commit but untracked files present (use "git add" to track)
-[1m[7m%[27m[1m[0m                                                                                                                                     [0m[27m[24m[Jjackblake@Jacks-MacBook-Pro Project1_DC_red % [K[?2004hggit log -1[?2004l
-[?1h=[33mcommit 95d10e98409f3c951962af27aff805fdda5a3b89[m[33m ([m[1;36mHEAD -> [m[1;32mDataWrangler[m[33m)[m[m
-Author: Jack Blake <jhblake2@wisc.edu>[m
-Date:   Sat Feb 19 17:02:24 2022 -0600[m
-[m
-    ShowLoader can now deal with rows with invalid data, added more descriptive comments, added to test5 in DataWranglerTests to test[m  functionality of skipping over invalid rows[m
-[K[?1l>[1m[7m%[27m[1m[0m                                                                                                                                     [0m[27m[24m[Jjackblake@Jacks-MacBook-Pro Project1_DC_red % [K[?2004hmmake clean[?2004l
-rm *.class
-[1m[7m%[27m[1m[0m                                                                                                                                     [0m[27m[24m[Jjackblake@Jacks-MacBook-Pro Project1_DC_red % [K[?2004hlls[?2004l
-DataWranglerTests.java		IShowSearcherFrontend.java	ShowSearcherApp.java		test3.csv
-IHashTableSortedSets.java	Makefile			TextUITester.java		test4.csv
-IShow.java			MapADT.java			empty.csv			test5.csv
-IShowLoader.java		Show.java			log				tv_shows.csv
-IShowSearcherBackend.java	ShowLoader.java			test2.csv
-[1m[7m%[27m[1m[0m                                                                                                                                     [0m[27m[24m[Jjackblake@Jacks-MacBook-Pro Project1_DC_red % [K[?2004hmmake runTests[?2004l
-javac IShowLoader.java
-javac Show.java
-javac ShowLoader.java
-javac DataWranglerTests.java
-java DataWranglerTests
-true
-true
-true
-true
-true
-[1m[7m%[27m[1m[0m                                                                                                                                     [0m[27m[24m[Jjackblake@Jacks-MacBook-Pro Project1_DC_red % [K[?2004heexir t[?2004l
-
-Script done on Sat Feb 19 17:06:33 2022
