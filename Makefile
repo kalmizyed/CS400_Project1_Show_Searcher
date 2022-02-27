@@ -1,9 +1,11 @@
 # Once everyone adds all of their dependencies this should just work
-run: ShowSearcherApp.class
+run: ShowSearcherApp.class HashTableSortedSets.class
 	java ShowSearcherApp
+clean:
+	rm *.class
 
 # Add your run[Role]Tests here
-runTests: runDataWranglerTests
+runTests: runDataWranglerTests runAlgorithmEngineerTests
 
 # DataWrangler
 runDataWranglerTests: DataWranglerTests.class 
@@ -25,5 +27,21 @@ Show.class: Show.java
 	javac Show.java
 # End of DataWrangler
 
-clean: 
-	rm *.class
+# Algorithm Engineer
+runAlgorithmEngineerTests: AlgorithmEngineerTests.class
+	java AlgorithmEngineerTests
+
+AlgorithmEngineerTests.class: HashTableSortedSets.class
+	javac AlgorithmEngineerTests.java
+
+HashTableSortedSets.class: HashTableMap.class MapADT.class
+	javac HashTableSortedSets.java
+
+HashTableMap.class: MapADT.class
+	javac HashTableMap.java
+IHashTableSortedSets.class: MapADT.class
+	javac IHashTableSortedSets.java
+MapADT.class: 
+	javac MapADT.java
+
+#End of Algorithm Engineer
