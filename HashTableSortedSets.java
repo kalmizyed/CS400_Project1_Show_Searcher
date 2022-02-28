@@ -45,6 +45,5 @@ public class HashTableSortedSets <KeyType,ValueType extends Comparable<ValueType
   @Override
   public int size() {
     return this.numShows;
-  }
-  
+  }  
 }

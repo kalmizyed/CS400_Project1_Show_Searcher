@@ -1,5 +1,5 @@
 # Once everyone adds all of their dependencies this should just work
-run: ShowSearcherApp.class HashTableSortedSets.class
+run: ShowSearcherApp.class HashTableSortedSets.class ShowSearcherBackend.class
 	java ShowSearcherApp
 clean:
 	rm *.class
@@ -9,7 +9,7 @@ ShowSearcherApp.class: ShowSearcherApp.java
 	javac ShowSearcherApp.java
 
 # Add your run[Role]Tests here
-runTests: runDataWranglerTests runAlgorithmEngineerTests runFrontendDeveloperTests
+runTests: runDataWranglerTests runAlgorithmEngineerTests runFrontendDeveloperTests runBackendDeveloperTests
 
 # DataWrangler
 runDataWranglerTests: DataWranglerTests.class 
@@ -70,3 +70,18 @@ TextUITester.class: TextUITester.java
 	javac TextUITester.java
 
 # End of Frontend Developer
+
+#Backend Developer
+runBackendDeveloperTests: BackendDeveloperTests.class
+	java BackendDeveloperTests
+
+BackendDeveloperTests.class: BackendDeveloperTests.java
+	javac BackendDeveloperTests.java
+
+ShowSearcherBackend.class: IShowSearcherBackend.class ShowSearcherBackend.java
+	javac ShowSearcherBackend.java
+
+IShowSearcherBackend.class: IShowSearcherBackend.java
+	javac IShowSearcherBackend.java
+
+#End of Backend Developer
