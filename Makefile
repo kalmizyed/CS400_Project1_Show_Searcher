@@ -1,4 +1,4 @@
-runTests: FrontendDeveloperTests.class
+runFrontendDeveloperTests: FrontendDeveloperTests.class
 	java FrontendDeveloperTests
 
 FrontendDeveloperTests.class: FrontendDeveloperTests.java ShowSearcherFrontend.class ShowSearcherBackendPlaceholder.class TextUITester.class
