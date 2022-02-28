@@ -3,10 +3,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * PLACEHOLDER CLASS
- * Returns placeholder values for methods in the IShowSearcherBackend interface.
+ * PLACEHOLDER CLASS.  Required so that ShowSearcherFrontend can compile.
+ * TODO replace with Backend Developer's ShowSearcherBackend class
  */
-public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { // TODO replace placeholder
+public class ShowSearcherBackend implements IShowSearcherBackend { // TODO replace placeholder
 
     // Used for toggling streaming provider filters
     private static final String[] providersArray = {"Netflix", "Hulu", "Prime Video", "Disney+"};
@@ -14,7 +14,7 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
     private boolean[] providerFilters = {true, true, true, true};
     private List<IShow> shows;
 
-    public ShowSearcherBackendPlaceholder() {
+    public ShowSearcherBackend() {
         shows = new ArrayList<>();
     }
 
@@ -53,14 +53,14 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
 
         switch(word.toLowerCase()) {
             case "title":
-                matchingShows.add(new ShowPlaceholder());
-                matchingShows.add(new ShowPlaceholder());
-                matchingShows.add(new ShowPlaceholder());
-                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
                 break;
             case "titan":
-                matchingShows.add(new ShowPlaceholder("Attack on Titan", 2013, 80, true, true, false, false));
-                matchingShows.add(new ShowPlaceholder("Titanic", 2010, 70, true, false, false, true));
+                matchingShows.add(new Show("Attack on Titan", 2013, 80, "Netflix Hulu"));
+                matchingShows.add(new Show("Titanic", 2010, 70, "Netflix Disney+"));
             default:
                 break;
         }
@@ -74,14 +74,14 @@ public class ShowSearcherBackendPlaceholder implements IShowSearcherBackend { //
 
         switch(year) {
             case 2010:
-                matchingShows.add(new ShowPlaceholder());
-                matchingShows.add(new ShowPlaceholder());
-                matchingShows.add(new ShowPlaceholder());
-                matchingShows.add(new ShowPlaceholder());
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
+                matchingShows.add(new Show("NO TITLE", 50, 50, "Netflix"));
                 break;
             case 2011:
-                matchingShows.add(new ShowPlaceholder("Breaking Bad", 2011, 80, true, true, false, false));
-                matchingShows.add(new ShowPlaceholder("Titanic II", 2011, 70, true, false, false, true));
+                matchingShows.add(new Show("Breaking Bad", 2011, 80, "Netflix Hulu"));
+                matchingShows.add(new Show("Titanic II", 2011, 70, "Netflix Disney+"));
             default:
                 break;
         }

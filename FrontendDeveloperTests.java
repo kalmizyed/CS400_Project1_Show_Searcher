@@ -6,7 +6,7 @@ import java.util.ArrayList;
  */
 public class FrontendDeveloperTests {
     // Tester and frontend objects to be used in tests
-    private static ShowSearcherFrontend frontend = new ShowSearcherFrontend(new ShowSearcherBackendPlaceholder());
+    private static ShowSearcherFrontend frontend = new ShowSearcherFrontend(new ShowSearcherBackend());
 
     /**
      * Tests the displayCommandMenu() method.
@@ -140,7 +140,7 @@ public class FrontendDeveloperTests {
             tester = new TextUITester("");
             
             ArrayList<IShow> showList = new ArrayList<>();
-            showList.add(new ShowPlaceholder());
+            showList.add(new Show("NO TITLE", 50, 50, "Netflix"));
             frontend.displayShows(showList);
 
             output = tester.checkOutput();
