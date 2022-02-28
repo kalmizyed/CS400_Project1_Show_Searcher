@@ -74,5 +74,4 @@ public class Show implements IShow{
         if(this.providers.contains(provider)) return true;
         return false;
     }
-    
 }

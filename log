@@ -1,48 +1,0 @@
-Script started on Tue Feb 22 23:52:23 2022
-[1m[7m%[27m[1m[0m                                                                                ]7;file://Josephs-MacBook-Air.local/Users/joe/eclipse-workspace/Project1_DC_red[0m[27m[24m[J(base) joe@Josephs-MacBook-Air Project1_DC_red % [K[?2004hggit status[?2004l
-On branch AlgorithmEngineer
-Your branch is ahead of 'origin/AlgorithmEngineer' by 4 commits.
-  (use "git push" to publish your local commits)
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	[31mlog[m
-
-nothing added to commit but untracked files present (use "git add" to track)
-[1m[7m%[27m[1m[0m                                                                                ]7;file://Josephs-MacBook-Air.local/Users/joe/eclipse-workspace/Project1_DC_red[0m[27m[24m[J(base) joe@Josephs-MacBook-Air Project1_DC_red % [K[?2004hggit log -1[?2004l
-[?1h=[33mcommit 3bac23baa8e352037c7f351b3036cb9745513cf9[m[33m ([m[1;36mHEAD -> [m[1;32mAlgorithmEngineer[m[33m)[m[m
-Author: jcai0791 <joe734647@gmail.com>[m
-Date:   Tue Feb 22 23:51:50 2022 -0600[m
-[m
-    Added makefile[m
-[K[?1l>[1m[7m%[27m[1m[0m                                                                                ]7;file://Josephs-MacBook-Air.local/Users/joe/eclipse-workspace/Project1_DC_red[0m[27m[24m[J(base) joe@Josephs-MacBook-Air Project1_DC_red % [K[?2004hmmake clean[?2004l
-rm -f *.class
-[1m[7m%[27m[1m[0m                                                                                ]7;file://Josephs-MacBook-Air.local/Users/joe/eclipse-workspace/Project1_DC_red[0m[27m[24m[J(base) joe@Josephs-MacBook-Air Project1_DC_red % [K[?2004hlls[?2004l
-AlgorithmEngineerTests.java	IShowSearcherFrontend.java
-HashTableMap.java		Makefile
-HashTableSortedSets.java	MapADT.java
-IHashTableSortedSets.java	ShowSearcherApp.java
-IShow.java			TextUITester.java
-IShowLoader.java		log
-IShowSearcherBackend.java	tv_shows.csv
-[1m[7m%[27m[1m[0m                                                                                ]7;file://Josephs-MacBook-Air.local/Users/joe/eclipse-workspace/Project1_DC_red[0m[27m[24m[J(base) joe@Josephs-MacBook-Air Project1_DC_red % [K[?2004hmmake runTests[?2004l
-javac MapADT.java
-javac HashTableMap.java
-Note: HashTableMap.java uses unchecked or unsafe operations.
-Note: Recompile with -Xlint:unchecked for details.
-javac HashTableSortedSets.java
-javac AlgorithmEngineerTests.java
-java AlgorithmEngineerTests
-true
-true
-true
-true
-true
-[1m[7m%[27m[1m[0m                                                                                ]7;file://Josephs-MacBook-Air.local/Users/joe/eclipse-workspace/Project1_DC_red[0m[27m[24m[J(base) joe@Josephs-MacBook-Air Project1_DC_red % [K[?2004heexit[?2004l
-Saving session...
-...copying shared history...
-...saving history...truncating history files...
-...completed.
-Deleting expired sessions...      45 completed.
-
-Script done on Tue Feb 22 23:53:00 2022
