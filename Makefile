@@ -1,5 +1,5 @@
 # Once everyone adds all of their dependencies this should just work
-run: ShowSearcherApp.class HashTableSortedSets.class ShowSearcherBackendPlaceholder.class #remove placeholder
+run: ShowSearcherApp.class HashTableSortedSets.class ShowSearcherBackend.class
 	java ShowSearcherApp
 clean:
 	rm *.class
@@ -9,7 +9,7 @@ ShowSearcherApp.class: ShowSearcherApp.java
 	javac ShowSearcherApp.java
 
 # Add your run[Role]Tests here
-runTests: runDataWranglerTests runAlgorithmEngineerTests runFrontendDeveloperTests #runBackendDeveloperTests
+runTests: runDataWranglerTests runAlgorithmEngineerTests runFrontendDeveloperTests runBackendDeveloperTests
 
 # DataWrangler
 runDataWranglerTests: DataWranglerTests.class 
