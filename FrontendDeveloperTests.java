@@ -6,6 +6,7 @@ import java.util.ArrayList;
  */
 public class FrontendDeveloperTests {
     // Tester and frontend objects to be used in tests
+    private static ShowSearcherFrontend frontendWithPlaceholder = new ShowSearcherFrontend(new ShowSearcherBackendPlaceholder());
     private static ShowSearcherFrontend frontend = new ShowSearcherFrontend(new ShowSearcherBackend());
 
     /**
@@ -22,7 +23,7 @@ public class FrontendDeveloperTests {
 
             // 1A: lowercase character
             tester = new TextUITester("t\n\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Choose a word that you would like to search for")) {
@@ -32,7 +33,7 @@ public class FrontendDeveloperTests {
 
             // 1B: uppercase character
             tester = new TextUITester("T\n\nQ\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Choose a word that you would like to search for")) {
@@ -42,7 +43,7 @@ public class FrontendDeveloperTests {
 
             // 1C: number
             tester = new TextUITester("1\n\n4\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Choose a word that you would like to search for")) {
@@ -56,7 +57,7 @@ public class FrontendDeveloperTests {
 
             // 2A: invalid lowercase character
             tester = new TextUITester("u\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -66,7 +67,7 @@ public class FrontendDeveloperTests {
 
             // 2B: invalid uppercase character
             tester = new TextUITester("U\nQ\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -76,7 +77,7 @@ public class FrontendDeveloperTests {
 
             // 2C: invalid number
             tester = new TextUITester("7\n4\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -86,7 +87,7 @@ public class FrontendDeveloperTests {
 
             // 2D: string longer than 1 character
             tester = new TextUITester("Title\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -96,7 +97,7 @@ public class FrontendDeveloperTests {
 
             // 2E: invalid character
             tester = new TextUITester("=\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -113,7 +114,7 @@ public class FrontendDeveloperTests {
     }
 
     /**
-     * Tests the displayShows() method.
+     * Tests the displayShows() method.  Makes use of placeholder classes.
      * @return true if all tests pass, false otherwise
      */
     public static boolean testDisplayShows() {
@@ -125,7 +126,7 @@ public class FrontendDeveloperTests {
             /////////////////////////////////////////
 
             tester = new TextUITester("");
-            frontend.displayShows(new ArrayList<>());
+            frontendWithPlaceholder.displayShows(new ArrayList<>());
             output = tester.checkOutput();
 
             if(output.length() != 0) {
@@ -140,8 +141,8 @@ public class FrontendDeveloperTests {
             tester = new TextUITester("");
             
             ArrayList<IShow> showList = new ArrayList<>();
-            showList.add(new Show("NO TITLE", 50, 50, "Netflix"));
-            frontend.displayShows(showList);
+            showList.add(new ShowPlaceholder());
+            frontendWithPlaceholder.displayShows(showList);
 
             output = tester.checkOutput();
 
@@ -160,7 +161,7 @@ public class FrontendDeveloperTests {
     }
 
     /**
-     * Tests the titleSearch() method.
+     * Tests the titleSearch() method.  Makes use of placeholder classes.
      * @return true if all tests pass, false otherwise
      */
     public static boolean testTitleSearch() {
@@ -172,7 +173,7 @@ public class FrontendDeveloperTests {
             ////////////////////////////
 
             tester = new TextUITester("t\nqwerty\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Found 0/")) {
@@ -185,7 +186,7 @@ public class FrontendDeveloperTests {
             /////////////////////////
 
             tester = new TextUITester("t\ntitan\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Attack on Titan")) {
@@ -203,7 +204,7 @@ public class FrontendDeveloperTests {
     }
 
     /**
-     * Tests the yearSearch() method.
+     * Tests the yearSearch() method.  Makes use of placeholder classes.
      * @return true if all tests pass, false otherwise
      */
     public static boolean testYearSearch() {
@@ -215,7 +216,7 @@ public class FrontendDeveloperTests {
             ////////////////////////////
 
             tester = new TextUITester("y\n1900\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Found 0/")) {
@@ -228,7 +229,7 @@ public class FrontendDeveloperTests {
             /////////////////////////
 
             tester = new TextUITester("y\n2011\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Breaking Bad")) {
@@ -246,7 +247,7 @@ public class FrontendDeveloperTests {
     }
 
     /**
-     * Tests the filterByProvider() method.
+     * Tests the filterByProvider() method.  Makes use of placeholder classes.
      * @return true if all tests pass, false otherwise
      */
     public static boolean testFilterByProvider() {
@@ -259,7 +260,7 @@ public class FrontendDeveloperTests {
 
             // 1A: lowercase character
             tester = new TextUITester("f\nn\nq\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [N]etflix")) {
@@ -269,7 +270,7 @@ public class FrontendDeveloperTests {
 
             // 1B: uppercase character
             tester = new TextUITester("F\nN\nQ\nQ\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [N]etflix")) {
@@ -279,7 +280,7 @@ public class FrontendDeveloperTests {
             
             // 1C: number
             tester = new TextUITester("3\n1\n5\n4\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [N]etflix")) {
@@ -293,7 +294,7 @@ public class FrontendDeveloperTests {
 
             // 2A: invalid lowercase character
             tester = new TextUITester("f\nu\nq\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -303,7 +304,7 @@ public class FrontendDeveloperTests {
 
             // 2B: invalid uppercase character
             tester = new TextUITester("F\nU\nQ\nQ\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -313,7 +314,7 @@ public class FrontendDeveloperTests {
 
             // 2C: invalid number
             tester = new TextUITester("3\n7\n5\n4\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -323,7 +324,7 @@ public class FrontendDeveloperTests {
 
             // 2D: string longer than 1 character
             tester = new TextUITester("f\nnetflix\nq\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -333,7 +334,7 @@ public class FrontendDeveloperTests {
 
             // 2E: invalid character
             tester = new TextUITester("f\n=\nq\nq\n");
-            frontend.runCommandLoop();
+            frontendWithPlaceholder.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("Invalid command")) {
@@ -351,7 +352,7 @@ public class FrontendDeveloperTests {
     }
 
     /**
-     * Runs all above tests and displays their results.
+     * Runs and prints the results of each test.
      */
     public static void main(String[] args) {
         System.out.println("testDisplayCommandMenu(): " + testDisplayCommandMenu());
@@ -359,5 +360,120 @@ public class FrontendDeveloperTests {
         System.out.println("testTitleSearch(): " + testTitleSearch());
         System.out.println("testYearSearch(): " + testYearSearch());
         System.out.println("testFilterByProvider(): " + testFilterByProvider());
+    }
+
+    /**
+     * Tests the titleSearch() method.  Makes use of integrated classes.
+     * @return true if all tests pass, false otherwise
+     */
+    public static boolean testTitleSearchIntegrated() {
+        try {
+            TextUITester tester;
+            String output;
+
+            // SCENARIO 1: Test no match
+            ////////////////////////////
+
+            tester = new TextUITester("t\nqwerty\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Found 0/")) {
+                System.out.println("FAILED: testTitleSearchIntegrated(); Scenario 1");
+                return false;
+            }
+
+
+            // SCENARIO 2: Test match
+            /////////////////////////
+
+            // 2A: case-sensitive
+            tester = new TextUITester("t\nTitan\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Attack on Titan")) {
+                System.out.println("FAILED: testTitleSearchIntegrated(); Scenario 2A");
+                return false;
+            }
+
+            // 2B: not case-sensitive
+            tester = new TextUITester("t\ntitan\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("Attack on Titan")) {
+                System.out.println("FAILED: testTitleSearchIntegrated(); Scenario 2B");
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("FAILED: testTitleSearchIntegrated(); unexpected exception");
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Tests the filterByProvider() method.  Makes use of integrated classes.
+     * @return true if all tests pass, false otherwise
+     */
+    public static boolean testFilterByProviderIntegrated() {
+        try {
+            TextUITester tester;
+            String output;
+
+            // SCENARIO 1: Test toggling 
+            ////////////////////////////
+
+            // 1A: Netflix
+            tester = new TextUITester("f\nn\nq\nq\n");
+            frontendWithPlaceholder.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("___ [N]etflix")) {
+                System.out.println("FAILED: testFilterByProviderIntegrated(); Scenario 1A");
+                return false;
+            }
+
+            // 1B: Hulu
+            tester = new TextUITester("f\nh\nq\nq\n");
+            frontendWithPlaceholder.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("___ [H]ulu")) {
+                System.out.println("FAILED: testFilterByProviderIntegrated(); Scenario 1B");
+                return false;
+            }
+
+            // 1C: Prime Video
+            tester = new TextUITester("f\np\nq\nq\n");
+            frontendWithPlaceholder.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("___ [P]rime Video")) {
+                System.out.println("FAILED: testFilterByProviderIntegrated(); Scenario 1C");
+                return false;
+            }
+
+            // 1D: Disney+
+            tester = new TextUITester("f\nd\nq\nq\n");
+            frontendWithPlaceholder.runCommandLoop();
+            output = tester.checkOutput();
+
+            if(!output.contains("___ [D]isney+")) {
+                System.out.println("FAILED: testFilterByProviderIntegrated(); Scenario 1D");
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("FAILED: testFilterByProviderIntegrated(); unexpected exception");
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,3 +1,10 @@
+// --== CS400 Project One File Header ==--
+// Name: Kaden Almizyed
+// CSL Username: kaden
+// Email: kalmizyed@wisc.edu
+// Lecture #: 004 @4:00pm
+// Notes to Grader: None
+
 import java.util.List;
 import java.util.Scanner;
 
