@@ -100,10 +100,10 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
         
         //Putting all pairs into new array
         for(Pair<KeyType,ValueType> p : list) {
-          if(newArr[p.key().hashCode()%capacity] == null) {
-            newArr[p.key().hashCode()%capacity] = new LinkedList<Pair<KeyType,ValueType>>();
+          if(newArr[Math.abs(p.key().hashCode())%capacity] == null) {
+            newArr[Math.abs(p.key().hashCode())%capacity] = new LinkedList<Pair<KeyType,ValueType>>();
           }
-          newArr[p.key().hashCode()%capacity].add(p);
+          newArr[Math.abs(p.key().hashCode())%capacity].add(p);
         }
       }
     }
