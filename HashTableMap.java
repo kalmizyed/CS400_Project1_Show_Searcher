@@ -72,10 +72,10 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public boolean put(KeyType key, ValueType value) {
     if(key==null||this.containsKey(key)) return false;
-    if(array[key.hashCode()%capacity]==null) {
-      array[key.hashCode()%capacity] = new LinkedList<Pair<KeyType,ValueType>>();
+    if(array[Math.abs(key.hashCode())%capacity]==null) {
+      array[Math.abs(key.hashCode())%capacity] = new LinkedList<Pair<KeyType,ValueType>>();
     }
-    array[key.hashCode()%capacity].add(new Pair<KeyType,ValueType>(key,value));
+    array[Math.abs(key.hashCode())%capacity].add(new Pair<KeyType,ValueType>(key,value));
     size++;
     
     //Rehashing
@@ -119,9 +119,9 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public ValueType get(KeyType key) throws NoSuchElementException {
     //Checks if position in array is empty
-    if(key==null||array[key.hashCode()%capacity]==null) throw new NoSuchElementException();
+    if(key==null||array[Math.abs(key.hashCode())%capacity]==null) throw new NoSuchElementException();
     //Finds key
-    for(Pair<KeyType,ValueType> p : array[key.hashCode()%capacity]) {
+    for(Pair<KeyType,ValueType> p : array[Math.abs(key.hashCode())%capacity]) {
       if(p.key().equals(key)) return p.value();
     }
     throw new NoSuchElementException();
@@ -144,9 +144,9 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public boolean containsKey(KeyType key) {
     //Checks whether position in array is empty
-    if(array[key.hashCode()%capacity]==null) return false;
+    if(array[Math.abs(key.hashCode())%capacity]==null) return false;
     //Finds key
-    for(Pair<KeyType,ValueType> p : array[key.hashCode()%capacity]) {
+    for(Pair<KeyType,ValueType> p : array[Math.abs(key.hashCode())%capacity]) {
       if(p.key().equals(key)) return true;
     }
     return false;
@@ -160,11 +160,11 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public ValueType remove(KeyType key) {
     //Finds key
-    if(array[key.hashCode()%capacity]==null) return null;
-    for(Pair<KeyType,ValueType> p : array[key.hashCode()%capacity]) {
+    if(array[Math.abs(Math.abs(key.hashCode()))%capacity]==null) return null;
+    for(Pair<KeyType,ValueType> p : array[Math.abs(key.hashCode())%capacity]) {
       //Removes key
       if(p.key().equals(key)) {
-        array[key.hashCode()%capacity].remove(p);
+        array[Math.abs(key.hashCode())%capacity].remove(p);
         size--;
         return p.value();
       }
