@@ -31,6 +31,10 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   public void addShow(IShow show) { //
     
     String[] split = show.getTitle().split(" ");
+    
+     for (String word : split)
+      word = word.toLowerCase();
+
     for (int i = 0; i < split.length; i++) {
       titleList.add(split[i], show);
       //System.out.println(split[i] + " placed at index: " + titleList.hash(split[i]));
