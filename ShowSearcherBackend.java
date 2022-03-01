@@ -11,10 +11,10 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   public int size;
   
   public String provider;
-  private boolean NetflixFilter;
-  private boolean PrimeFilter;
-  private boolean HuluFilter;
-  private boolean DisneyFilter;
+  private boolean NetflixFilter = true;
+  private boolean PrimeFilter = true;
+  private boolean HuluFilter = true;
+  private boolean DisneyFilter = true;
   
   public ShowSearcherBackend() {
     titleList = new HashTableSortedSets();
@@ -31,10 +31,8 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   public void addShow(IShow show) { //
     
     String[] split = show.getTitle().split(" ");
-    
-     for (String word : split)
+    for (String word : split)
       word = word.toLowerCase();
-
     for (int i = 0; i < split.length; i++) {
       titleList.add(split[i], show);
       //System.out.println(split[i] + " placed at index: " + titleList.hash(split[i]));
@@ -90,7 +88,6 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   public List<IShow> searchByTitleWord(String word) {
     List<IShow> titles = new ArrayList<IShow>();
     
-    
     ArrayList<IShow> retList = new ArrayList<IShow>();
     try {
       titles = titleList.get(word);
@@ -107,17 +104,19 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
 
   @Override
   public List<IShow> searchByYear(int year) {
-    List<IShow> years = new ArrayList<IShow>();
-    years = yearList.get(year);
-    
     ArrayList<IShow> retList = new ArrayList<IShow>();
-    
-    for (IShow show : years) {
-      if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
-          || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
-        retList.add(show);
+    try {
+      List<IShow> years = new ArrayList<IShow>();
+      years = yearList.get(year);
+      
+      for (IShow show : years) {
+        if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
+            || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
+          retList.add(show);
+      }
     }
-    
+    catch(Exception e) {
+    }
     return retList;
     
   }
