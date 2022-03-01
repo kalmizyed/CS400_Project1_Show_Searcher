@@ -57,7 +57,7 @@ runFrontendDeveloperTests: FrontendDeveloperTests.class
 FrontendDeveloperTests.class: FrontendDeveloperTests.java ShowSearcherFrontend.class ShowSearcherBackendPlaceholder.class TextUITester.class
 	javac FrontendDeveloperTests.java
 
-ShowSearcherFrontend.class: ShowSearcherFrontend.java ShowPlaceholder.class
+ShowSearcherFrontend.class: ShowSearcherFrontend.java ShowPlaceholder.class IShowSearcherFrontend.class
 	javac ShowSearcherFrontend.java
 
 ShowPlaceholder.class: ShowPlaceholder.java
@@ -68,7 +68,8 @@ ShowSearcherBackendPlaceholder.class: ShowSearcherBackendPlaceholder.java ShowPl
 
 TextUITester.class: TextUITester.java
 	javac TextUITester.java
-
+IShowSearcherFrontend.class: IShowSearcherFrontend.java
+	javac IShowSearcherFrontend.java
 # End of Frontend Developer
 
 #Backend Developer
