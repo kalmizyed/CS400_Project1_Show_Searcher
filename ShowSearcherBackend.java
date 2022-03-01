@@ -90,6 +90,7 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
     
     ArrayList<IShow> retList = new ArrayList<IShow>();
     try {
+      titles = titleList.get(word);
       for (IShow show : titles) {
         if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
             || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
