@@ -85,7 +85,6 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   @Override
   public List<IShow> searchByTitleWord(String word) {
     List<IShow> titles = new ArrayList<IShow>();
-    titles = titleList.get(word);
     
     
     ArrayList<IShow> retList = new ArrayList<IShow>();
