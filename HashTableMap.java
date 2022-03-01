@@ -61,7 +61,14 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
     array = (LinkedList<Pair<KeyType, ValueType>>[]) new LinkedList[capacity];
   }
 
-  
+  /**
+   * Returns absolute value and mod capacity of hashCode of key
+   * @param given key
+   * @return index in hashMap
+   */
+  private int hash(KeyType key) {
+    return Math.abs(key.hashCode())%capacity;
+  }
   
   /**
    * Puts key into map. Doubles capacity and rehashes if 75% full.
@@ -72,10 +79,10 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public boolean put(KeyType key, ValueType value) {
     if(key==null||this.containsKey(key)) return false;
-    if(array[Math.abs(key.hashCode())%capacity]==null) {
-      array[Math.abs(key.hashCode())%capacity] = new LinkedList<Pair<KeyType,ValueType>>();
+    if(array[hash(key)]==null) {
+      array[hash(key)] = new LinkedList<Pair<KeyType,ValueType>>();
     }
-    array[Math.abs(key.hashCode())%capacity].add(new Pair<KeyType,ValueType>(key,value));
+    array[hash(key)].add(new Pair<KeyType,ValueType>(key,value));
     size++;
     
     //Rehashing
@@ -100,10 +107,10 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
         
         //Putting all pairs into new array
         for(Pair<KeyType,ValueType> p : list) {
-          if(newArr[Math.abs(p.key().hashCode())%capacity] == null) {
-            newArr[Math.abs(p.key().hashCode())%capacity] = new LinkedList<Pair<KeyType,ValueType>>();
+          if(newArr[hash(p.key())] == null) {
+            newArr[hash(p.key())] = new LinkedList<Pair<KeyType,ValueType>>();
           }
-          newArr[Math.abs(p.key().hashCode())%capacity].add(p);
+          newArr[hash(p.key())].add(p);
         }
       }
     }
@@ -119,9 +126,9 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public ValueType get(KeyType key) throws NoSuchElementException {
     //Checks if position in array is empty
-    if(key==null||array[Math.abs(key.hashCode())%capacity]==null) throw new NoSuchElementException();
+    if(key==null||array[hash(key)]==null) throw new NoSuchElementException();
     //Finds key
-    for(Pair<KeyType,ValueType> p : array[Math.abs(key.hashCode())%capacity]) {
+    for(Pair<KeyType,ValueType> p : array[hash(key)]) {
       if(p.key().equals(key)) return p.value();
     }
     throw new NoSuchElementException();
@@ -144,9 +151,9 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public boolean containsKey(KeyType key) {
     //Checks whether position in array is empty
-    if(array[Math.abs(key.hashCode())%capacity]==null) return false;
+    if(array[hash(key)]==null) return false;
     //Finds key
-    for(Pair<KeyType,ValueType> p : array[Math.abs(key.hashCode())%capacity]) {
+    for(Pair<KeyType,ValueType> p : array[hash(key)]) {
       if(p.key().equals(key)) return true;
     }
     return false;
@@ -160,11 +167,11 @@ public class HashTableMap <KeyType, ValueType> implements MapADT<KeyType,ValueTy
   @Override
   public ValueType remove(KeyType key) {
     //Finds key
-    if(array[Math.abs(Math.abs(key.hashCode()))%capacity]==null) return null;
-    for(Pair<KeyType,ValueType> p : array[Math.abs(key.hashCode())%capacity]) {
+    if(array[hash(key)]==null) return null;
+    for(Pair<KeyType,ValueType> p : array[hash(key)]) {
       //Removes key
       if(p.key().equals(key)) {
-        array[Math.abs(key.hashCode())%capacity].remove(p);
+        array[hash(key)].remove(p);
         size--;
         return p.value();
       }
