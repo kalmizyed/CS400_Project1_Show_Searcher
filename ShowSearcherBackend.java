@@ -87,15 +87,17 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
     List<IShow> titles = new ArrayList<IShow>();
     titles = titleList.get(word);
     
+    
     ArrayList<IShow> retList = new ArrayList<IShow>();
-    
-    for (IShow show : titles) {
-      if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
-          || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
-        retList.add(show);
+    try {
+      for (IShow show : titles) {
+        if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
+            || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
+          retList.add(show);
+      }
     }
-    
-    
+    catch (Exception e) {
+    }
     return retList;
   }
 
