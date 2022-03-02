@@ -6,18 +6,20 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
 
   //do we need an array for the providers ?
   
-  public HashTableSortedSets titleList;
-  public HashTableSortedSets yearList;
+  public HashTableSortedSets<String, IShow> titleList;
+  public HashTableSortedSets<Integer, IShow> yearList;
   public int size;
   
   public String provider;
-  public boolean filter;
+  private boolean NetflixFilter = true;
+  private boolean PrimeFilter = true;
+  private boolean HuluFilter = true;
+  private boolean DisneyFilter = true;
   
   public ShowSearcherBackend() {
     titleList = new HashTableSortedSets();
     yearList = new HashTableSortedSets();
     provider = null;
-    filter = false;
     size = 0;
   }
   
@@ -29,12 +31,14 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   public void addShow(IShow show) { //
     
     String[] split = show.getTitle().split(" ");
+    for (String word : split)
+      word = word.toLowerCase();
     for (int i = 0; i < split.length; i++) {
-      titleList.put(split[i], show);
+      titleList.add(split[i], show);
       //System.out.println(split[i] + " placed at index: " + titleList.hash(split[i]));
     }
 
-    yearList.put(show.getYear(), show);
+    yearList.add(show.getYear(), show);
     //System.out.println(show.getTitle() + " placed at index: " + yearList.hash(show.getYear()));
     size++;
   }
@@ -52,19 +56,28 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
    */
   @Override
   public void setProviderFilter(String provider, boolean filter) {
-    this.provider = provider;
-    this.filter = filter;
+    if (provider.equals("Netflix")) NetflixFilter = filter;
+    if (provider.equals("Hulu")) HuluFilter = filter;
+    if (provider.equals("Disney+")) DisneyFilter = filter;
+    if (provider.equals("Prime Video")) PrimeFilter = filter;
   }
 
   @Override
   public boolean getProviderFilter(String provider) {
-    return filter;
+    if (provider.equals("Netflix")) return NetflixFilter;
+    if (provider.equals("Hulu")) return HuluFilter;
+    if (provider.equals("Disney+")) return DisneyFilter;
+    if (provider.equals("Prime Video")) return PrimeFilter;
+    return false;
   }
 
   //do we need this
   @Override
   public void toggleProviderFilter(String provider) {
-    // TODO Auto-generated method stub
+    if (provider.equals("Netflix")) NetflixFilter ^= true;
+    if (provider.equals("Hulu")) HuluFilter ^= true;
+    if (provider.equals("Disney+")) DisneyFilter ^= true;
+    if (provider.equals("Prime Video")) PrimeFilter ^= true;
   }
 
   public String getProvider() {
@@ -73,67 +86,40 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   
   @Override
   public List<IShow> searchByTitleWord(String word) {
-    //List<IShow> titleList = new ArrayList<IShow>();
+    List<IShow> titles = new ArrayList<IShow>();
     
-    /*
-    for (int i = 0; i < showList.getCapacity(); i++) {
-      LinkedList<Show> list = showList.table[i];
-      for (Show show : list) {
-        if (show.getTitle().contains(word) && show.isAvailableOn(provider))
-          titleList.add(show);
+    ArrayList<IShow> retList = new ArrayList<IShow>();
+    try {
+      titles = titleList.get(word);
+      for (IShow show : titles) {
+        if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
+            || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
+          retList.add(show);
       }
     }
-    
-    sortList(titleList);
-    */
-    //int index = hash()
-    List<IShow> retList = new LinkedList<IShow>();
-    int index = titleList.hash(word);
-    
-    for (IShow show : titleList.table[index]) {
-      if (show.getTitle().contains(word))
-        retList.add(show);
+    catch (Exception e) {
     }
-    
     return retList;
   }
 
   @Override
   public List<IShow> searchByYear(int year) {
-    
-    /*
-    List<IShow> yearList = new ArrayList<IShow>();
-    
-    for (int i = 0; i < showList.getCapacity(); i++) {
-      LinkedList<Show> list = showList.table[i];
-      for (Show show : list) {
-        if (show.getYear() == year && show.isAvailableOn(provider))
-          yearList.add(show);
+    ArrayList<IShow> retList = new ArrayList<IShow>();
+    try {
+      List<IShow> years = new ArrayList<IShow>();
+      years = yearList.get(year);
+      
+      for (IShow show : years) {
+        if ((DisneyFilter == true && show.isAvailableOn("Disney+")) || (NetflixFilter == true && show.isAvailableOn("Netflix"))
+            || (HuluFilter == true && show.isAvailableOn("Hulu")) || (PrimeFilter == true && show.isAvailableOn("Prime Video")))
+          retList.add(show);
       }
     }
-    
-    sortList(yearList);
-    return yearList;
-    */
-    int index = yearList.hash(year);
-    return yearList.table[index];
-    
-  }
-  
-  /*
-  private void sortList(List<IShow> list) {
-    //insertion sort the items in the list by their rating 
-    for (int j = 1; j < list.size(); j++) {
-      IShow current = list.get(j);
-      int i = j-1;
-      while ((i > -1) && ((list.get(i).getRating() > current.getRating()))) {
-          list.set(i+1, list.get(i));
-          i--;
-      }
-      list.set(i+1, current);
-    
+    catch(Exception e) {
     }
+    return retList;
+    
   }
-  */
 }
+
 
