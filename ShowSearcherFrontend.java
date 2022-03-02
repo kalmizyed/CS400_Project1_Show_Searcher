@@ -54,7 +54,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         String command = scanner.nextLine();
 
         // Make sure command is only one character
-        if(command.length() > 1) {
+        if(command.length() != 1) {
             System.out.println("Invalid command.");
             displayCommandMenu();
             return;
@@ -148,7 +148,12 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
     @Override
     public void yearSearch() {
         System.out.print("Choose a year that you would like to search: ");
-        int year = Integer.parseInt(scanner.nextLine());
+        int year = -1;
+        try {
+            year = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid year.");
+        }
 
         List<IShow> showList = showSearcher.searchByYear(year);
         System.out.println("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
@@ -178,7 +183,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         String commandString = scanner.nextLine();
 
         // Make sure command is only one character
-        if(commandString.length() > 1) {
+        if(commandString.length() != 1) {
             System.out.println("Invalid command.");
             filterByProvider();
             return;

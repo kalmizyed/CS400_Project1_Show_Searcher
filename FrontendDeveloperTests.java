@@ -418,8 +418,9 @@ public class FrontendDeveloperTests {
             frontend.runCommandLoop();
             output = tester.checkOutput();
 
-            if(!output.contains("Attack on Titan")) {
+            if(!output.contains("Titan")) {
                 System.out.println("FAILED: testTitleSearchIntegrated(); Scenario 2A");
+                System.out.println(output);
                 return false;
             }
 
@@ -428,7 +429,7 @@ public class FrontendDeveloperTests {
             frontend.runCommandLoop();
             output = tester.checkOutput();
 
-            if(!output.contains("Attack on Titan")) {
+            if(!output.contains("Titan")) {
                 System.out.println("FAILED: testTitleSearchIntegrated(); Scenario 2B");
                 return false;
             }
