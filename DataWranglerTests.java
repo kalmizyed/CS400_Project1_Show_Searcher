@@ -22,6 +22,10 @@ public class DataWranglerTests {
         System.out.println(test3());
         System.out.println(test4());
         System.out.println(test5());
+        System.out.println(test6());
+        System.out.println(test7());
+        System.out.println(test8());
+        System.out.println(test9());
     }
 
     /**
@@ -222,6 +226,154 @@ public class DataWranglerTests {
 
 
         } catch(Exception e){
+            //unexpected Exceptions
+            return false;
+        }
+        return true;
+    }
+
+    private static ShowSearcherFrontend frontend = new ShowSearcherFrontend(new ShowSearcherBackend());
+
+    /**
+     * FOR CODE REVIEW: Unit test for the ShowSearcherFrontend's filterByProvider method that 
+     * ensures that special characters and other edge cases yield invalid output
+     * @return true if all cases work as intended, false otherwise
+     */
+    public static boolean test6(){
+        try{
+            TextUITester tester;
+            String output;
+
+            //Hitting enter with no character
+            tester = new TextUITester("3\n\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Invalid command")) return false;
+
+            //Tests with normal special characters
+            tester = new TextUITester("3\n$\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Invalid command")) return false;
+
+            tester = new TextUITester("3\n*\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Invalid command")) return false;
+
+            //Tests with backslashed special characters
+            tester = new TextUITester("3\n\\\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Invalid command")) return false;
+
+            tester = new TextUITester("3\n\"\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Invalid command")) return false;
+
+        } catch(Exception e){
+            e.printStackTrace();
+            //unexpected Exceptions
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * FOR CODE REVIEW: Tests the yearSearch method when invalid data is provided,
+     * Could cause problems in the Frontend or Backend depending on the input
+     * @return true if all cases work as intended, false otherwise
+     */
+    public static boolean test7(){
+        try{
+            TextUITester tester;
+            String output;
+
+            //empty string as year, should find 0 shows and throw no exceptions
+            tester = new TextUITester("y\n\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Found 0")) return false;
+
+            //non-number as year, should find 0 shows and throw no exceptions
+            tester = new TextUITester("y\njoey\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Found 0")) return false;
+
+            //negative number, should find 0 shows and throw no exceptions
+            tester = new TextUITester("y\n-1\nq\n");
+            frontend.runCommandLoop();
+            output = tester.checkOutput();
+            if(!output.contains("Found 0")) return false;
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+            //unexpected Exceptions
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Whitebox unit test on ShowSearcherBackend class's methods with invalid input
+     * @return true if all cases work as intended, false otherwise
+     */
+    public static boolean test8(){
+        try{
+            IShowSearcherBackend backend = new ShowSearcherBackend();
+            //invalid provider filter, shouldn't throw any exceptions, should just do nothing
+            backend.setProviderFilter("Joe", true);
+            backend.getProviderFilter("Shmoe");
+            backend.toggleProviderFilter("123");
+
+            //add null show
+            backend.addShow(null);  ////Currently causes NullPointerException, should be specified
+
+        } catch(Exception e){
+            e.printStackTrace();
+            //unexpected Exceptions
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Blackbox Integration test of the Show class with the ShowSearcherBackend class
+     * @return true if all cases work as intended, false otherwise
+     */
+    public static boolean test9(){
+        try{
+            IShowSearcherBackend backend = new ShowSearcherBackend();
+            IShow s = new Show("Modern Family", 2021, 95, "Netflix,Hulu");
+            backend.addShow(s);
+            //make sure size updated properly
+            if(backend.getNumberOfShows() != 1) return false;
+            
+            backend.setProviderFilter("Prime Video", false);
+            backend.setProviderFilter("Disney+", false);
+
+            //make sure you can search for a show who's providers have their filters on
+            backend.setProviderFilter("Netflix", true);
+            backend.setProviderFilter("Hulu", true);
+            if(!backend.searchByYear(2021).contains(s)) return false;
+            if(!backend.searchByTitleWord("Modern").contains(s)) return false;
+
+            //make sure you can't search for a show who's providers have their filters off
+            backend.setProviderFilter("Netflix", false);
+            backend.setProviderFilter("Hulu", false);
+            if(backend.searchByYear(2021).contains(s)) return false;
+            if(backend.searchByTitleWord("Modern").contains(s)) return false;
+
+            //make sure a Show with 2 providers can be searched for as long as one provider is on
+            backend.setProviderFilter("Netflix", true);
+            backend.setProviderFilter("Hulu", false);
+            if(!backend.searchByYear(2021).contains(s)) return false;
+            if(!backend.searchByTitleWord("Modern").contains(s)) return false;
+        } catch(Exception e){
+            e.printStackTrace();
             //unexpected Exceptions
             return false;
         }
