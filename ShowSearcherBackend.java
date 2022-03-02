@@ -31,12 +31,8 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   public void addShow(IShow show) { //
     
     String[] split = show.getTitle().split(" ");
-    for (String word : split) {
-      word = word.replaceAll("[^a-zA-Z0-9]", "");   
-      word = word.toLowerCase();
-    }
     for (int i = 0; i < split.length; i++) {
-      titleList.add(split[i], show);
+      titleList.add(split[i].replaceAll("[^a-zA-Z0-9]", "").toLowerCase(), show);
       //System.out.println(split[i] + " placed at index: " + titleList.hash(split[i]));
     }
 
@@ -89,7 +85,7 @@ public class ShowSearcherBackend implements IShowSearcherBackend{
   @Override
   public List<IShow> searchByTitleWord(String word) {
     List<IShow> titles = new ArrayList<IShow>();
-    
+    word = word.toLowerCase();
     ArrayList<IShow> retList = new ArrayList<IShow>();
     try {
       titles = titleList.get(word);
