@@ -532,7 +532,7 @@ public class FrontendDeveloperTests {
             Show mixedSeparator = new Show("Mixing it up", 50, 50, "Netflix, Hulu/Disney+");
             boolean mixedSeparatorAccepted = mixedSeparator.isAvailableOn("Netflix") && spaceSeparator.isAvailableOn("Hulu") && mixedSeparator.isAvailableOn("Disney+");
 
-            if(spaceSeparatorAccepted && slashSeparatorAccepted && commaSeparatorAccepted && mixedSeparatorAccepted) {
+            if(!(spaceSeparatorAccepted && slashSeparatorAccepted && commaSeparatorAccepted && mixedSeparatorAccepted)) {
                 System.out.println("FAILED: testShow(); Scenario 1");
                 
                 System.out.println("Failed separators:");
