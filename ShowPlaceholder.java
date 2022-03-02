@@ -1,3 +1,10 @@
+// --== CS400 Project One File Header ==--
+// Name: Kaden Almizyed
+// CSL Username: kaden
+// Email: kalmizyed@wisc.edu
+// Lecture #: 004 @4:00pm
+// Notes to Grader: None
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -5,7 +12,7 @@ import java.util.List;
  * PLACEHOLDER CLASS
  * Returns placeholder values for methods in the IShow interface.
  */
-public class ShowPlaceholder implements IShow { // TODO replace placeholder
+public class ShowPlaceholder implements IShow {
 
     private static final String[] providersArray = {"Netflix", "Hulu", "Prime Video", "Disney+"};
     private static final List<String> providers = Arrays.asList(providersArray);

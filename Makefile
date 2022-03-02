@@ -54,20 +54,23 @@ MapADT.class:
 runFrontendDeveloperTests: FrontendDeveloperTests.class
 	java FrontendDeveloperTests
 
-FrontendDeveloperTests.class: FrontendDeveloperTests.java ShowSearcherFrontend.class ShowSearcherBackendPlaceholder.class TextUITester.class
+FrontendDeveloperTests.class: FrontendDeveloperTests.java ShowSearcherFrontend.class ShowSearcherBackendPlaceholder.class TextUITester.class ShowSearcherBackend.class
 	javac FrontendDeveloperTests.java
 
-ShowSearcherFrontend.class: ShowSearcherFrontend.java ShowPlaceholder.class
+ShowSearcherFrontend.class: ShowSearcherFrontend.java ShowPlaceholder.class IShowSearcherFrontend.class
 	javac ShowSearcherFrontend.java
 
-ShowPlaceholder.class: ShowPlaceholder.java
+ShowPlaceholder.class: ShowPlaceholder.java IShow.class
 	javac ShowPlaceholder.java
 
-ShowSearcherBackendPlaceholder.class: ShowSearcherBackendPlaceholder.java ShowPlaceholder.class
+ShowSearcherBackendPlaceholder.class: ShowSearcherBackendPlaceholder.java ShowPlaceholder.class IShowSearcherBackend.class
 	javac ShowSearcherBackendPlaceholder.java
 
 TextUITester.class: TextUITester.java
 	javac TextUITester.java
+
+IShowSearcherFrontend.class: IShowSearcherFrontend.java
+	javac IShowSearcherFrontend.java
 
 # End of Frontend Developer
 

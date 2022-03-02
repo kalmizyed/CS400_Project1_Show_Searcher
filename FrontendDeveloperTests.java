@@ -1,3 +1,11 @@
+// --== CS400 Project One File Header ==--
+// Name: Kaden Almizyed
+// CSL Username: kaden
+// Email: kalmizyed@wisc.edu
+// Lecture #: 004 @4:00pm
+// Notes to Grader: Code review partner: Jack Blake (Data Wrangler)
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -5,6 +13,28 @@ import java.util.ArrayList;
  * @author Kaden Almizyed
  */
 public class FrontendDeveloperTests {
+    /**
+     * Runs and prints the results of each test.
+     */
+    public static void main(String[] args) {
+        System.out.println("testDisplayCommandMenu(): " + testDisplayCommandMenu());
+        System.out.println("testDisplayShows(): " + testDisplayShows());
+        System.out.println("testTitleSearch(): " + testTitleSearch());
+        System.out.println("testYearSearch(): " + testYearSearch());
+        System.out.println("testFilterByProvider(): " + testFilterByProvider());
+        System.out.println("testTitleSearchIntegrated(): " + testTitleSearchIntegrated());
+        System.out.println("testFilterByProviderIntegrated(): " + testFilterByProviderIntegrated());
+        System.out.println("testIsAvailableOn(): " + testIsAvailableOn());
+        System.out.println("testShowLoader(): " + testShowLoader());
+    }
+
+
+    /////////////////////////////////////////////////////////////
+    // The following tests are designed to check functionality
+    // when the ShowSearcherFrontend class is used in conjunction
+    // with placeholder classes.
+    /////////////////////////////////////////////////////////////
+
     // Tester and frontend objects to be used in tests
     private static ShowSearcherFrontend frontendWithPlaceholder = new ShowSearcherFrontend(new ShowSearcherBackendPlaceholder());
     private static ShowSearcherFrontend frontend = new ShowSearcherFrontend(new ShowSearcherBackend());
@@ -351,16 +381,12 @@ public class FrontendDeveloperTests {
         return true;
     }
 
-    /**
-     * Runs and prints the results of each test.
-     */
-    public static void main(String[] args) {
-        System.out.println("testDisplayCommandMenu(): " + testDisplayCommandMenu());
-        System.out.println("testDisplayShows(): " + testDisplayShows());
-        System.out.println("testTitleSearch(): " + testTitleSearch());
-        System.out.println("testYearSearch(): " + testYearSearch());
-        System.out.println("testFilterByProvider(): " + testFilterByProvider());
-    }
+
+    /////////////////////////////////////////////////////////////
+    // The following tests are designed to check functionality
+    // when the ShowSearcherFrontend class is used in conjunction
+    // with other developers' classes.
+    /////////////////////////////////////////////////////////////
 
     /**
      * Tests the titleSearch() method.  Makes use of integrated classes.
@@ -430,7 +456,7 @@ public class FrontendDeveloperTests {
 
             // 1A: Netflix
             tester = new TextUITester("f\nn\nq\nq\n");
-            frontendWithPlaceholder.runCommandLoop();
+            frontend.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [N]etflix")) {
@@ -440,7 +466,7 @@ public class FrontendDeveloperTests {
 
             // 1B: Hulu
             tester = new TextUITester("f\nh\nq\nq\n");
-            frontendWithPlaceholder.runCommandLoop();
+            frontend.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [H]ulu")) {
@@ -450,7 +476,7 @@ public class FrontendDeveloperTests {
 
             // 1C: Prime Video
             tester = new TextUITester("f\np\nq\nq\n");
-            frontendWithPlaceholder.runCommandLoop();
+            frontend.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [P]rime Video")) {
@@ -460,7 +486,7 @@ public class FrontendDeveloperTests {
 
             // 1D: Disney+
             tester = new TextUITester("f\nd\nq\nq\n");
-            frontendWithPlaceholder.runCommandLoop();
+            frontend.runCommandLoop();
             output = tester.checkOutput();
 
             if(!output.contains("___ [D]isney+")) {
@@ -470,6 +496,85 @@ public class FrontendDeveloperTests {
 
         } catch (Exception e) {
             System.out.println("FAILED: testFilterByProviderIntegrated(); unexpected exception");
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+
+    ////////////////////////////////////////////////////
+    // The following tests are designed to check the
+    // functionality of the Show and ShowLoader classes.
+    // Used for the code review.
+    ////////////////////////////////////////////////////
+    
+    /**
+     * Tests the isAvailableOn() method from the Show class.
+     * @return true if all tests pass, false otherwise
+     */
+    public static boolean testIsAvailableOn() {
+        try {
+
+            // SCENARIO 1: Test separators in provider String
+            /////////////////////////////////////////////////
+
+            Show spaceSeparator = new Show("The space between us", 50, 50, "Netflix Hulu");
+            boolean spaceSeparatorAccepted = spaceSeparator.isAvailableOn("Netflix") && spaceSeparator.isAvailableOn("Hulu");
+
+            Show slashSeparator = new Show("The hash-slinging slasher", 50, 50, "Netflix/Hulu");
+            boolean slashSeparatorAccepted = slashSeparator.isAvailableOn("Netflix") && spaceSeparator.isAvailableOn("Hulu");
+
+            Show commaSeparator = new Show("Comma over here", 50, 50, "Netflix,Hulu");
+            boolean commaSeparatorAccepted = commaSeparator.isAvailableOn("Netflix") && spaceSeparator.isAvailableOn("Hulu");
+
+            Show mixedSeparator = new Show("Mixing it up", 50, 50, "Netflix, Hulu/Disney+");
+            boolean mixedSeparatorAccepted = mixedSeparator.isAvailableOn("Netflix") && spaceSeparator.isAvailableOn("Hulu") && mixedSeparator.isAvailableOn("Disney+");
+
+            if(spaceSeparatorAccepted && slashSeparatorAccepted && commaSeparatorAccepted && mixedSeparatorAccepted) {
+                System.out.println("FAILED: testShow(); Scenario 1");
+                
+                System.out.println("Failed separators:");
+                if(!spaceSeparatorAccepted) System.out.println("Space");
+                if(!slashSeparatorAccepted) System.out.println("Slash");
+                if(!commaSeparatorAccepted) System.out.println("Comma");
+                if(!mixedSeparatorAccepted) System.out.println("Mixed separators");
+
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("FAILED: testShow(); unexpected exception");
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Tests the ShowLoader class.
+     * @return true if all tests pass, false otherwise
+     */
+    public static boolean testShowLoader() {
+        try {
+
+            // SCENARIO 1: Invalid filepath
+            ///////////////////////////////
+
+            try {
+                new ShowLoader().loadShows("tv_shows_2.csv");
+                
+                // If no exception is thrown, test fails
+                System.out.println("FAILED: testShowLoader(); Scenario 1");
+                return false;
+            } catch (FileNotFoundException e) {
+                // Runs as expected
+            }
+
+        } catch (Exception e) {
+            System.out.println("FAILED: testShowLoader(); unexpected exception");
             e.printStackTrace();
             return false;
         }

@@ -151,7 +151,7 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend {
         int year = Integer.parseInt(scanner.nextLine());
 
         List<IShow> showList = showSearcher.searchByYear(year);
-        System.out.print("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
+        System.out.println("Found " + showList.size() + "/" + showSearcher.getNumberOfShows() + " matches.");
         displayShows(showList);
         displayCommandMenu();
     }
